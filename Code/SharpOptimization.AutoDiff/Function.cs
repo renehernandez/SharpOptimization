@@ -6,21 +6,25 @@ using System.Threading.Tasks;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Function<T>
+    public class Function<T> where T: struct, IEquatable<T>
     {
 
-        protected Func<Variable<T>, T> func;
+        protected Func<Variable<T>[], T> func;
+
+        protected Variable<T> resul;
+
+        protected Lazy<Variable<T>> gradient; 
 
         public int Length { get; private set; }
 
-
-        public Function(Func<Variable<T>, T> func, int length)
+        public Function(Func<Variable<T>[], T> func, int length)
         {
             this.func = func;
             Length = length;
+            gradient = new Lazy<Variable<T>>();
         }
 
-        public T Evaluate(Variable<T> vector)
+        public T Eval(params Variable<T>[] vector)
         {
             if (vector.Length != Length)
                 throw new InvalidOperationException();

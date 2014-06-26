@@ -7,26 +7,33 @@ using System.Threading.Tasks;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Variable<T>
+    public class Variable<T> : IEquatable<Variable<T>> where T : struct, IEquatable<T>
     {
 
-        protected T[] values;
+        # region Fields
+
+        protected readonly T value;
+        protected readonly Lazy<Variable<T>> dx;
 
         protected static Func<T, T, T> add;
         protected static Func<T, T, T> subtract;
         protected static Func<T, T, T> multiply;
         protected static Func<T, T, T> divide;
 
-        public int Length
+        # endregion
+
+        # region Public Properties
+
+        public T Value { get; private set; }
+
+        public Variable<T> Dx 
         {
-            get { return values.Length; }
+            get { return dx.Value; }
         }
 
-        public T this[int index]
-        {
-            get { return values[index]; }
-            set { values[index] = value; }
-        }
+        # endregion
+
+        # region Constructors
 
         static Variable()
         {
@@ -36,25 +43,71 @@ namespace SharpOptimization.AutoDiff
             divide = Divide();
         }
 
-        public Variable(params T[] values)
+        public Variable(T value)
         {
-            this.values = values;
+            Value = value;
+            dx = new Lazy<Variable<T>>(() => (Variable<T>)default(T));
         }
 
-        public Variable(IEnumerable<T> values)
+        public Variable(T value, T dx)
         {
-            this.values = values.ToArray();
+            Value = value;
+            this.dx = new Lazy<Variable<T>>(() => (Variable<T>) dx);
         }
 
-        public static Variable<T> operator +(Variable<T> first, Variable<T> second)
+        public Variable(T value, Lazy<Variable<T>> dx)
         {
-            return new Variable<T>(Enumerable.Range(0, first.Length).Select(i => add(first[i], second[i])));
+            Value = value;
+            this.dx = dx;
         }
 
-        public static Variable<T> operator -(Variable<T> first, Variable<T> second)
+        # endregion
+
+        # region Operators
+
+        public static implicit operator T(Variable<T> var)
         {
-            return new Variable<T>(Enumerable.Range(0, first.Length).Select(i => subtract(first[i], second[i])));
+            return var.value;
         }
+
+        public static implicit operator Variable<T>(T value)
+        {
+            return new Variable<T>(value);
+        }
+
+        # endregion
+
+        # region Public Methods
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Variable<T>);
+        }
+
+        public bool Equals(Variable<T> other)
+        {
+            if (ReferenceEquals(other, null))
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return value.Equals(other.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("<{0}|{1}>", value, Dx.value);
+        }
+
+        # endregion
+
+        # region Delegates for Operations
 
         private static Func<T, T, T> Add()
         {
@@ -99,6 +152,8 @@ namespace SharpOptimization.AutoDiff
 
             return funcDivide;
         }
+
+        # endregion
 
     }
 }
