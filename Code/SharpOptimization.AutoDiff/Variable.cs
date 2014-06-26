@@ -7,26 +7,25 @@ using System.Threading.Tasks;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Variable<T> : IEquatable<Variable<T>> where T : struct, IEquatable<T>
+    public class Variable
     {
 
         # region Fields
 
-        protected readonly T value;
-        protected readonly Lazy<Variable<T>> dx;
+        protected readonly Lazy<Variable> dx;
 
-        protected static Func<T, T, T> add;
-        protected static Func<T, T, T> subtract;
-        protected static Func<T, T, T> multiply;
-        protected static Func<T, T, T> divide;
+        //protected static Func<T, T, T> add;
+        //protected static Func<T, T, T> subtract;
+        //protected static Func<T, T, T> multiply;
+        //protected static Func<T, T, T> divide;
 
         # endregion
 
         # region Public Properties
 
-        public T Value { get; private set; }
+        public double Value { get; private set; }
 
-        public Variable<T> Dx 
+        public Variable Dx 
         {
             get { return dx.Value; }
         }
@@ -37,25 +36,25 @@ namespace SharpOptimization.AutoDiff
 
         static Variable()
         {
-            add = Add();
-            subtract = Substract();
-            multiply = Multiply();
-            divide = Divide();
+            //add = Add();
+            //subtract = Substract();
+            //multiply = Multiply();
+            //divide = Divide();
         }
 
-        public Variable(T value)
+        public Variable(double value)
         {
             Value = value;
-            dx = new Lazy<Variable<T>>(() => (Variable<T>)default(T));
+            dx = new Lazy<Variable>(() => 0.0);
         }
 
-        public Variable(T value, T dx)
+        public Variable(double value, double dx)
         {
             Value = value;
-            this.dx = new Lazy<Variable<T>>(() => (Variable<T>) dx);
+            this.dx = new Lazy<Variable>(() => dx);
         }
 
-        public Variable(T value, Lazy<Variable<T>> dx)
+        public Variable(double value, Lazy<Variable> dx)
         {
             Value = value;
             this.dx = dx;
@@ -65,14 +64,14 @@ namespace SharpOptimization.AutoDiff
 
         # region Operators
 
-        public static implicit operator T(Variable<T> var)
+        public static implicit operator double(Variable var)
         {
-            return var.value;
+            return var.Value;
         }
 
-        public static implicit operator Variable<T>(T value)
+        public static implicit operator Variable(double value)
         {
-            return new Variable<T>(value);
+            return new Variable(value);
         }
 
         # endregion
@@ -81,10 +80,10 @@ namespace SharpOptimization.AutoDiff
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Variable<T>);
+            return Equals(obj as Variable);
         }
 
-        public bool Equals(Variable<T> other)
+        public bool Equals(Variable other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -92,7 +91,7 @@ namespace SharpOptimization.AutoDiff
             if (ReferenceEquals(this, other))
                 return true;
 
-            return value.Equals(other.Value);
+            return Value.Equals(other.Value);
         }
 
         public override int GetHashCode()
@@ -102,56 +101,56 @@ namespace SharpOptimization.AutoDiff
 
         public override string ToString()
         {
-            return string.Format("<{0}|{1}>", value, Dx.value);
+            return string.Format("<{0}|{1}>", Value, Dx.Value);
         }
 
         # endregion
 
         # region Delegates for Operations
 
-        private static Func<T, T, T> Add()
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
+        //private static Func<T, T, T> Add()
+        //{
+        //    var paramA = Expression.Parameter(typeof(T), "a");
+        //    var paramB = Expression.Parameter(typeof(T), "b");
 
-            var body = Expression.Add(paramA, paramB);
-            var funcAdd = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
+        //    var body = Expression.Add(paramA, paramB);
+        //    var funcAdd = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
-            return funcAdd;
-        }
+        //    return funcAdd;
+        //}
 
-        private static Func<T, T, T> Substract()
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
+        //private static Func<T, T, T> Substract()
+        //{
+        //    var paramA = Expression.Parameter(typeof(T), "a");
+        //    var paramB = Expression.Parameter(typeof(T), "b");
 
-            var body = Expression.Subtract(paramA, paramB);
-            var funcSubtract = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
+        //    var body = Expression.Subtract(paramA, paramB);
+        //    var funcSubtract = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
-            return funcSubtract;
-        }
+        //    return funcSubtract;
+        //}
 
-        private static Func<T, T, T> Multiply()
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
+        //private static Func<T, T, T> Multiply()
+        //{
+        //    var paramA = Expression.Parameter(typeof(T), "a");
+        //    var paramB = Expression.Parameter(typeof(T), "b");
 
-            var body = Expression.Multiply(paramA, paramB);
-            var funcMultiply = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
+        //    var body = Expression.Multiply(paramA, paramB);
+        //    var funcMultiply = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
-            return funcMultiply;
-        }
+        //    return funcMultiply;
+        //}
 
-        private static Func<T, T, T> Divide()
-        {
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
+        //private static Func<T, T, T> Divide()
+        //{
+        //    var paramA = Expression.Parameter(typeof(T), "a");
+        //    var paramB = Expression.Parameter(typeof(T), "b");
 
-            var body = Expression.Divide(paramA, paramB);
-            var funcDivide = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
+        //    var body = Expression.Divide(paramA, paramB);
+        //    var funcDivide = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
-            return funcDivide;
-        }
+        //    return funcDivide;
+        //}
 
         # endregion
 
