@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Optimizer
+namespace SharpOptimization.AutoDiff
 {
     public class Function<T>
     {
@@ -22,7 +22,7 @@ namespace Optimizer
 
         public T Evaluate(Variable<T> vector)
         {
-            if(vector.Length != Length)
+            if (vector.Length != Length)
                 throw new InvalidOperationException();
 
             return func(vector);

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Optimizer
+namespace SharpOptimization.AutoDiff
 {
     public class Variable<T>
     {
@@ -17,7 +17,8 @@ namespace Optimizer
         protected static Func<T, T, T> multiply;
         protected static Func<T, T, T> divide;
 
-        public int Length {
+        public int Length
+        {
             get { return values.Length; }
         }
 
@@ -47,7 +48,7 @@ namespace Optimizer
 
         public static Variable<T> operator +(Variable<T> first, Variable<T> second)
         {
-            return new Variable<T>(Enumerable.Range(0, first.Length).Select(i => add(first[i],second[i])));
+            return new Variable<T>(Enumerable.Range(0, first.Length).Select(i => add(first[i], second[i])));
         }
 
         public static Variable<T> operator -(Variable<T> first, Variable<T> second)
@@ -57,9 +58,9 @@ namespace Optimizer
 
         private static Func<T, T, T> Add()
         {
-            var paramA = Expression.Parameter(typeof (T), "a"); 
+            var paramA = Expression.Parameter(typeof(T), "a");
             var paramB = Expression.Parameter(typeof(T), "b");
-            
+
             var body = Expression.Add(paramA, paramB);
             var funcAdd = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
@@ -70,7 +71,7 @@ namespace Optimizer
         {
             var paramA = Expression.Parameter(typeof(T), "a");
             var paramB = Expression.Parameter(typeof(T), "b");
-            
+
             var body = Expression.Subtract(paramA, paramB);
             var funcSubtract = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
@@ -81,7 +82,7 @@ namespace Optimizer
         {
             var paramA = Expression.Parameter(typeof(T), "a");
             var paramB = Expression.Parameter(typeof(T), "b");
-            
+
             var body = Expression.Multiply(paramA, paramB);
             var funcMultiply = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
@@ -92,12 +93,12 @@ namespace Optimizer
         {
             var paramA = Expression.Parameter(typeof(T), "a");
             var paramB = Expression.Parameter(typeof(T), "b");
-            
+
             var body = Expression.Divide(paramA, paramB);
             var funcDivide = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
 
             return funcDivide;
-        } 
+        }
 
     }
 }

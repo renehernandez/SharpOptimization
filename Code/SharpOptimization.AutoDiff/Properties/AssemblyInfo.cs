@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AutomaticDifferentiation")]
+[assembly: AssemblyTitle("SharpOptimization.AutoDiff")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AutomaticDifferentiation")]
+[assembly: AssemblyProduct("SharpOptimization.AutoDiff")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("21dfa17f-79be-42e0-a25f-20ad8686e4ac")]
+[assembly: Guid("4d34fd94-7fb4-41d0-992a-b15d3a40b545")]
 
 // Version information for an assembly consists of the following four values:
 //
