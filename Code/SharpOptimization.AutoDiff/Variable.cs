@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Variable
+    public class Variable : IEquatable<Variable>, IComparable<Variable>
     {
 
         # region Fields
@@ -74,6 +74,72 @@ namespace SharpOptimization.AutoDiff
             return new Variable(value);
         }
 
+        public static Variable operator -(Variable var)
+        {
+            return new Variable(-var.Value, new Lazy<Variable>(() => -D(var)));
+        }
+
+        public static Variable operator +(Variable left, Variable right)
+        {
+            return new Variable(left.Value + right.Value, new Lazy<Variable>(() => D(left) + D(right)));
+        }
+
+        public static Variable operator -(Variable left, Variable right)
+        {
+            return new Variable(left.Value - right.Value, new Lazy<Variable>(() => D(left) - D(right)));
+        }
+
+        public static Variable operator *(Variable left, Variable right)
+        {
+            return new Variable(left.Value * right.Value, new Lazy<Variable>(() => D(left) * right + D(right) * left));
+        }
+
+        public static Variable operator /(Variable left, Variable right)
+        {
+            return new Variable(left.Value/right.Value,
+                new Lazy<Variable>(() => (D(left)*right - D(right)*left)/(right*right)));
+        }
+
+        public static Variable operator ++(Variable var)
+        {
+            return var += 1.0;
+        }
+
+        public static Variable operator --(Variable var)
+        {
+            return var -= 1.0;
+        }
+
+        public static bool operator ==(Variable left, Variable right)
+        {
+            return left != null &&  left.Equals(right);
+        }
+
+        public static bool operator !=(Variable left, Variable right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator >(Variable left, Variable right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        public static bool operator <(Variable left, Variable right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(Variable left, Variable right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >=(Variable left, Variable right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
         # endregion
 
         # region Public Methods
@@ -97,6 +163,14 @@ namespace SharpOptimization.AutoDiff
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
+        }
+
+        public int CompareTo(Variable other)
+        {
+            if(ReferenceEquals(other, null))
+                throw new ArgumentNullException();
+
+            return Math.Sign(this - other);
         }
 
         public override string ToString()
@@ -151,6 +225,27 @@ namespace SharpOptimization.AutoDiff
 
         //    return funcDivide;
         //}
+
+        # endregion
+
+
+        # region Derivatives
+
+        public static Variable D(Variable var)
+        {
+            return var.Dx;
+        }
+
+        public static Variable D2(Variable var)
+        {
+            return D(var);
+        }
+
+        public static Variable D(Variable var, int n)
+        {
+            return n == 0 ? var : D(D(var, n - 1));
+        }
+
 
         # endregion
 

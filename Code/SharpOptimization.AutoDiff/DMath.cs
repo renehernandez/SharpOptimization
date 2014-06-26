@@ -9,5 +9,6 @@ namespace SharpOptimization.AutoDiff
     public static class DMath
     {
 
+
     }
 }
