@@ -30,6 +30,11 @@ namespace SharpOptimization.AutoDiff
             get { return dx.Value; }
         }
 
+        public Variable D2
+        {
+            get { return Dx.Dx; }
+        }
+
         # endregion
 
         # region Constructors
@@ -76,28 +81,28 @@ namespace SharpOptimization.AutoDiff
 
         public static Variable operator -(Variable var)
         {
-            return new Variable(-var.Value, new Lazy<Variable>(() => -D(var)));
+            return new Variable(-var.Value, new Lazy<Variable>(() => -var.Dx));
         }
 
         public static Variable operator +(Variable left, Variable right)
         {
-            return new Variable(left.Value + right.Value, new Lazy<Variable>(() => D(left) + D(right)));
+            return new Variable(left.Value + right.Value, new Lazy<Variable>(() => left.Dx + right.Dx));
         }
 
         public static Variable operator -(Variable left, Variable right)
         {
-            return new Variable(left.Value - right.Value, new Lazy<Variable>(() => D(left) - D(right)));
+            return new Variable(left.Value - right.Value, new Lazy<Variable>(() => left.Dx - right.Dx));
         }
 
         public static Variable operator *(Variable left, Variable right)
         {
-            return new Variable(left.Value * right.Value, new Lazy<Variable>(() => D(left) * right + D(right) * left));
+            return new Variable(left.Value * right.Value, new Lazy<Variable>(() => left.Dx * right + right.Dx * left));
         }
 
         public static Variable operator /(Variable left, Variable right)
         {
             return new Variable(left.Value/right.Value,
-                new Lazy<Variable>(() => (D(left)*right - D(right)*left)/(right*right)));
+                new Lazy<Variable>(() => (left.Dx*right - right.Dx*left)/(right*right)));
         }
 
         public static Variable operator ++(Variable var)
@@ -231,19 +236,10 @@ namespace SharpOptimization.AutoDiff
 
         # region Derivatives
 
-        public static Variable D(Variable var)
-        {
-            return var.Dx;
-        }
-
-        public static Variable D2(Variable var)
-        {
-            return D(var);
-        }
 
         public static Variable D(Variable var, int n)
         {
-            return n == 0 ? var : D(D(var, n - 1));
+            return n == 0 ? var : D(var, n - 1).Dx;
         }
 
 
