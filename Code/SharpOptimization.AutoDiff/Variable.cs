@@ -13,35 +13,42 @@ namespace SharpOptimization.AutoDiff
 
         # region Public Properties
 
+        private bool isConstant;
+        private double constantValue;
+
+
 
         # endregion
 
         # region Constructors
 
-        static Variable()
-        {
-            //add = Add();
-            //subtract = Substract();
-            //multiply = Multiply();
-            //divide = Divide();
-        }
-
         public Variable()
         {
+            isConstant = false;
         }
 
         # endregion
 
-        public override double Evaluate(params double[] values)
+        internal Variable MakeConstant(double value)
         {
-            Contract.Requires(values.Length == 1);
-            return values[0];
+            isConstant = true;
+            constantValue = value;
+            return this;
         }
 
-        public override double[] Differentiate(params double[] values)
+        public virtual double Eval(double value)
         {
-            Contract.Requires(values.Length == 1);
-            return new[] {1.0};
+            return isConstant ? constantValue : value;
+        }
+
+        internal override double Evaluate(Variable[] vars, params double[] values)
+        {
+            return isConstant ? constantValue : values[0];
+        }
+
+        public override double[] Differentiate(Variable[] vars, params double[] values)
+        {
+            throw new NotImplementedException();
         }
     }
 }

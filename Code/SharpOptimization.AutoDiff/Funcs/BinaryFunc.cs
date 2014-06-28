@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharpOptimization.AutoDiff.Operators
+﻿namespace SharpOptimization.AutoDiff.Funcs
 {
-    internal abstract class BinaryOperator : Term
+    internal abstract class BinaryFunc : Func
     {
 
         # region Properties
@@ -19,14 +13,12 @@ namespace SharpOptimization.AutoDiff.Operators
 
         # region Constructor
 
-        protected BinaryOperator(Term left, Term right)
+        protected BinaryFunc(Term left, Term right)
         {
             Left = left;
             Right = right;
         }
 
         # endregion
-
-
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpOptimization.AutoDiff.Operators
+namespace SharpOptimization.AutoDiff
 {
-    internal class UnaryOperator
+    public abstract class Func : Term
     {
+
     }
 }
