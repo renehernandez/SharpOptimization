@@ -41,7 +41,14 @@
   <ItemGroup>
     <Compile Include="DMath.cs" />
     <Compile Include="Function.cs" />
+    <Compile Include="Operators\AddOperator.cs" />
+    <Compile Include="Operators\BinaryOperator.cs" />
+    <Compile Include="Operators\DivideOperator.cs" />
+    <Compile Include="Operators\MultiplyOperator.cs" />
+    <Compile Include="Operators\SubtractOperator.cs" />
+    <Compile Include="Operators\UnaryOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Term.cs" />
     <Compile Include="Variable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

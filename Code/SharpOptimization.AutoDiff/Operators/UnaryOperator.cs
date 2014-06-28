@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpOptimization.AutoDiff
+namespace SharpOptimization.AutoDiff.Operators
 {
-    public static class DMath
+    internal class UnaryOperator
     {
-
-
-
     }
 }
