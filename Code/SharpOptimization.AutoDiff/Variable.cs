@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.AutoDiff.Compiler;
+using SharpOptimization.AutoDiff.Funcs;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Variable : Term
+    public class Variable : Term, IEquatable<Variable>
     {
 
         # region Public Properties
 
-        private bool isConstant;
-        private double constantValue;
+        protected int Index { get; private set; }
 
-
+        protected double ConstantValue { get; private set; }
 
         # endregion
 
@@ -24,31 +26,55 @@ namespace SharpOptimization.AutoDiff
 
         public Variable()
         {
-            isConstant = false;
+            Index = -1;
         }
 
         # endregion
 
-        internal Variable MakeConstant(double value)
+        //internal override Func<double[], double> Compile()
+        //{
+        //    return Evaluate;
+        //}
+
+        internal Variable SetIndex(int index)
         {
-            isConstant = true;
-            constantValue = value;
+            Index = index;
             return this;
         }
 
-        public virtual double Eval(double value)
+        internal override double Evaluate(params double[] values)
         {
-            return isConstant ? constantValue : value;
+            return values[Index];
         }
 
-        internal override double Evaluate(Variable[] vars, params double[] values)
+        //public override double[] Differentiate(Variable[] vars, params double[] values)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public override bool Equals(object obj)
         {
-            return isConstant ? constantValue : values[0];
+            return Equals(obj as Variable);
         }
 
-        public override double[] Differentiate(Variable[] vars, params double[] values)
+        public bool Equals(Variable other)
         {
-            throw new NotImplementedException();
+            return !ReferenceEquals(other, null) && ReferenceEquals(other, this);
         }
+
+        # region Operators
+
+        public static bool operator ==(Variable x, Variable y)
+        {
+            return x != null && x.Equals(y);
+        }
+
+        public static bool operator !=(Variable x, Variable y)
+        {
+            return !(x == y);
+        }
+
+        # endregion
+
     }
 }

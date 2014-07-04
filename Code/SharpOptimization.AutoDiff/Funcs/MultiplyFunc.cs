@@ -4,18 +4,13 @@ namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class MultiplyFunc: BinaryFunc
     {
-        public MultiplyFunc(Term left, Term right) : base(left, right)
+        public MultiplyFunc(Term left, Term right) : base(left, right, values => left.Evaluate(values) * right.Evaluate(values), null)
         {
         }
 
-        internal override double Evaluate(Variable[] vars, params double[] values)
-        {
-            return Left.Evaluate(vars,values)*Right.Evaluate(vars, values);
-        }
-
-        public override double[] Differentiate(Variable[] vars, params double[] values)
-        {
-            throw new NotImplementedException();
-        }
+        //internal override Func<double[], double> Compile()
+        //{
+        //    return evaluator;
+        //}
     }
 }

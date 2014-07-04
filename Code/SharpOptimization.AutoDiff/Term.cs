@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.AutoDiff.Funcs;
 
 namespace SharpOptimization.AutoDiff
@@ -11,85 +12,102 @@ namespace SharpOptimization.AutoDiff
     public abstract class Term
     {
 
-        public double Eval(Variable[] vars, params double[] values)
+        public static Constant Zero()
         {
-            for (int i = 0; i < vars.Length; i++)
-            {
-                vars[i].MakeConstant(values[i]);
-            }
-            return Evaluate(vars, values);
+            return new Constant(0);
         }
 
-        internal abstract double Evaluate(Variable[] vars, params double[] values);
+        public static Constant One()
+        {
+            return new Constant(1);
+        }
 
-        public abstract double[] Differentiate(Variable[] vars, params double[] values);
+        public static Constant ToConstant(double value)
+        {
+            return new Constant(value);
+        }
+
+
+        internal abstract double Evaluate(params double[] values);
+
+        //public abstract double[] Differentiate(Variable[] vars, params double[] values);
 
         # region Operators
 
-        public static Term operator -(Term inner)
+        public static Func operator -(Term inner)
         {
             return new MinusFunc(inner);
         }
 
-        public static Term operator +(double left, Term right)
+        public static Func operator +(double left, Term right)
         {
-            return new Variable().MakeConstant(left) + right;
+            return new AddFunc(ToConstant(left), right);
         }
 
-        public static Term operator +(Term left, double right)
+        public static Func operator +(Term left, double right)
         {
-            return left + new Variable().MakeConstant(right);
+            return new AddFunc(left, ToConstant(right));
         }
 
-        public static Term operator +(Term left, Term right)
+        public static Func operator +(Term left, Term right)
         {
             return new AddFunc(left, right);
         }
 
-        public static Term operator -(double left, Term right)
+        public static Func operator -(double left, Term right)
         {
-            return new Variable().MakeConstant(left) - right;
+            return new SubtractFunc(ToConstant(left), right);
         }
 
-        public static Term operator -(Term left, double right)
+        public static Func operator -(Term left, double right)
         {
-            return left - new Variable().MakeConstant(right);
+            return new SubtractFunc(left, ToConstant(right));
         }
 
-        public static Term operator -(Term left, Term right)
+        public static Func operator -(Term left, Term right)
         {
             return new SubtractFunc(left, right);
         }
 
-        public static Term operator /(double left, Term right)
+        public static Func operator /(double left, Term right)
         {
-            return new Variable().MakeConstant(left) / right;
+            return new DivideFunc(ToConstant(left), right);
         }
 
-        public static Term operator /(Term left, double right)
+        public static Func operator /(Term left, double right)
         {
-            return left/ new Variable().MakeConstant(right);
+            return new DivideFunc(left, ToConstant(right));
         }
 
-        public static Term operator /(Term left, Term right)
-        {   
+        public static Func operator /(Term left, Term right)
+        {
             return new DivideFunc(left, right);
         }
 
-        public static Term operator *(double left, Term right)
+        public static Func operator *(double left, Term right)
         {
-            return new Variable().MakeConstant(left) * right;
+            return new MultiplyFunc(ToConstant(left), right);
         }
 
-        public static Term operator *(Term left, double right)
+        public static Func operator *(Term left, double right)
         {
-            return left * new Variable().MakeConstant(right);
+            return new MultiplyFunc(left, ToConstant(right));
         }
 
-        public static Term operator *(Term left, Term right)
+        public static Func operator *(Term left, Term right)
         {
             return new MultiplyFunc(left, right);
         }
+
+        # endregion
+
+        # region Conversions
+
+        public static implicit operator Term(double value)
+        {
+            return ToConstant(value);
+        }
+
 
         # endregion
 

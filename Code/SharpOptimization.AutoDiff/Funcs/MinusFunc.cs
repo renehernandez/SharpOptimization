@@ -4,18 +4,18 @@ namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class MinusFunc : UnaryFunc
     {
-        public MinusFunc(Term inner) : base(inner)
+
+        # region Constructor
+
+        internal MinusFunc(Term inner) : base(inner, values => - inner.Evaluate(values), null)
         {
         }
 
-        internal override double Evaluate(Variable[] vars, params double[] values)
-        {
-            return - Inner.Evaluate(vars, values);
-        }
+        # endregion
 
-        public override double[] Differentiate(Variable[] vars, params double[] values)
-        {
-            throw new NotImplementedException();
-        }
+        //internal override Func<double[], double> Compile()
+        //{
+        //    return evaluator;
+        //}
     }
 }

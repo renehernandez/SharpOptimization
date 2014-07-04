@@ -39,15 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\CompiledTerm.cs" />
+    <Compile Include="Constant.cs" />
     <Compile Include="DMath.cs" />
     <Compile Include="Func.cs" />
+    <Compile Include="FuncDelegator.cs" />
     <Compile Include="Funcs\AddFunc.cs" />
+    <Compile Include="Funcs\BinaryFunc.cs" />
     <Compile Include="Funcs\DivideFunc.cs" />
+    <Compile Include="Funcs\IdentityFunc.cs" />
     <Compile Include="Funcs\MinusFunc.cs" />
     <Compile Include="Funcs\MultiplyFunc.cs" />
     <Compile Include="Funcs\SubtractFunc.cs" />
     <Compile Include="Funcs\UnaryFunc.cs" />
-    <Compile Include="Funcs\BinaryFunc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Term.cs" />
     <Compile Include="Variable.cs" />

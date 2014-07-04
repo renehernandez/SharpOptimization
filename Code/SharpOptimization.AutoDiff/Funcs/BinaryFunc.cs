@@ -1,24 +1,27 @@
-﻿namespace SharpOptimization.AutoDiff.Funcs
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SharpOptimization.AutoDiff.Funcs
 {
-    internal abstract class BinaryFunc : Func
+    public class BinaryFunc : Func
     {
 
-        # region Properties
+        public Term Left { get; set; }
 
-        public Term Left { get; private set; }
+        public Term Right { get; set; }
 
-        public Term Right { get; private set; }
-
-        # endregion
-
-        # region Constructor
-
-        protected BinaryFunc(Term left, Term right)
+        internal BinaryFunc(Term left, Term right, Func<double[], double> evaluator, Func<double[], double[]> diff) : base(evaluator, diff)
         {
             Left = left;
             Right = right;
         }
 
-        # endregion
+        //public static FuncDelegator Factory(Func<Variable[], double> lambda, Func<double[], double[]> diff)
+        //{
+        //    return new Func(lambda, diff);
+        //}
     }
 }
