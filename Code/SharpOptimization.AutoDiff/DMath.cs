@@ -35,6 +35,11 @@ namespace SharpOptimization.AutoDiff
             return new LnFunc(x);
         }
 
+        public static Func Sqrt(Term x)
+        {
+            return new SqrtFunc(x);
+        }
+
     }
 
     internal class SinFunc : UnaryFunc
@@ -115,6 +120,25 @@ namespace SharpOptimization.AutoDiff
         }
     }
 
+    internal class SqrtFunc : UnaryFunc
+    {
+        public SqrtFunc(Term inner) : base(inner, values => Math.Sqrt(inner.Evaluate(values)), null)
+        {
+            Inner.Parent = this;
+        }
+
+        internal override void Differentiate()
+        {
+            if (Parent == null)
+            {
+                Derivative = IdentityFunc.Identity(1);
+            }
+
+            Inner.Derivative += Derivative * DMath.Sqrt(Inner) / (2 * Inner);
+            Inner.Differentiate();
+        }
+    }
+
     internal class PowFunc : BinaryFunc
     {
         public PowFunc(Term left, Term right)
@@ -138,4 +162,5 @@ namespace SharpOptimization.AutoDiff
             Right.Differentiate();
         }
     }
+
 }
