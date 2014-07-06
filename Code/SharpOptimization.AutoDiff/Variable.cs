@@ -47,10 +47,21 @@ namespace SharpOptimization.AutoDiff
             return values[Index];
         }
 
-        //public override double[] Differentiate(Variable[] vars, params double[] values)
+        internal override void ResetDerivative()
+        {
+            Derivative = IdentityFunc.Identity(0);
+        }
+
+        //internal override double[] Differentiate(params double[] values)
         //{
         //    throw new NotImplementedException();
         //}
+
+        internal override void Differentiate()
+        {
+            //return;
+        }
+
 
         public override bool Equals(object obj)
         {

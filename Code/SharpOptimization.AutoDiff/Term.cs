@@ -12,6 +12,10 @@ namespace SharpOptimization.AutoDiff
     public abstract class Term
     {
 
+        internal Term Parent { get; set; }
+
+        internal Func Derivative { get; set; }
+
         public static Constant Zero()
         {
             return new Constant(0);
@@ -30,7 +34,11 @@ namespace SharpOptimization.AutoDiff
 
         internal abstract double Evaluate(params double[] values);
 
-        //public abstract double[] Differentiate(Variable[] vars, params double[] values);
+        //internal abstract double[] Differentiate(params double[] values);
+
+        internal abstract void ResetDerivative();
+
+        internal abstract void Differentiate();
 
         # region Operators
 

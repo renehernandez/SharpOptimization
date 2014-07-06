@@ -13,9 +13,16 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # endregion
 
-        //internal override Func<double[], double> Compile()
-        //{
-        //    return evaluator;
-        //}
+        internal override void Differentiate()
+        {
+            if (Parent == null)
+            {
+                Derivative = IdentityFunc.Identity(1);
+            }
+
+            Inner.Derivative -= Derivative;
+
+            Inner.Differentiate();
+        }
     }
 }

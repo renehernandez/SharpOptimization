@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
-    public class UnaryFunc : Func
+    public abstract class UnaryFunc : Func
     {
 
         public Term Inner { get; set; }
@@ -14,6 +14,13 @@ namespace SharpOptimization.AutoDiff.Funcs
         internal UnaryFunc(Term inner, Func<double[], double> evaluator, Func<double[], double[]> diff) : base(evaluator, diff)
         {
             Inner = inner;
+            Inner.Parent = this;
+        }
+
+        internal override void ResetDerivative()
+        {
+            Inner.Derivative = IdentityFunc.Identity(0);
+            Inner.ResetDerivative();
         }
     }
 }

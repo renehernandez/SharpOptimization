@@ -25,5 +25,16 @@ namespace SharpOptimization.AutoDiff.Funcs
             return new IdentityFunc(constant, constant.Evaluate, null);
         }
 
+        internal override void Differentiate()
+        {
+            if (Parent == null)
+            {
+                Derivative = Identity(1);
+            }
+
+            Inner.Derivative += Derivative;
+            
+            Inner.Differentiate();
+        }
     }
 }

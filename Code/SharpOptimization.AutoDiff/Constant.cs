@@ -28,6 +28,16 @@ namespace SharpOptimization.AutoDiff
             return Value;
         }
 
+        internal override void ResetDerivative()
+        {
+            Derivative = IdentityFunc.Identity(0);
+        }
+
+        internal override void Differentiate()
+        {
+            // return;
+        }
+
         public static implicit operator double(Constant constant)
         {
             return constant.Value;

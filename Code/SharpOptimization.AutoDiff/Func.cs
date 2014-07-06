@@ -8,20 +8,19 @@ using SharpOptimization.AutoDiff.Funcs;
 
 namespace SharpOptimization.AutoDiff
 {
-    public class Func : Term
+    public abstract class Func : Term
     {
+        protected Func[] Derivatives { get; set; }
 
-        
-        protected Func<double[], double> evaluator;
+        protected Func<double[], double> Evaluator { get; set; }
 
-        protected Func<double[], double[]> diff;
+        protected Func<double[], double[]> Diff { get; set; }
 
 
         internal Func(Func<double[], double> evaluator, Func< double[], double[]> diff)
         {
-            this.evaluator = evaluator;
-            this.diff = diff;
-        }
+            this.Evaluator = evaluator;
+            this.Diff = diff;        }
 
         //internal override Func<double[], double> Compile()
         //{
@@ -39,12 +38,20 @@ namespace SharpOptimization.AutoDiff
 
         internal override double Evaluate(params double[] values)
         {
-            return evaluator(values);
+            return Evaluator(values);
         }
 
         public double[] Differentiate(Variable[] vars, params double[] values)
         {
-            throw new Exception();
+            for (int i = 0; i < vars.Length; i++)
+            {
+                vars[i].SetIndex(i);
+            }
+
+            ResetDerivative();
+            Differentiate();
+
+            return vars.Select(v => v.Derivative.Evaluate(values)).ToArray();
         }
 
     }

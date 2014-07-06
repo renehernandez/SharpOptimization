@@ -8,9 +8,18 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
         }
 
-        //internal override Func<double[], double> Compile()
-        //{
-        //    return evaluator;
-        //}
+        internal override void Differentiate()
+        {
+            if (Parent == null)
+            {
+                Derivative = IdentityFunc.Identity(1);
+            }
+
+            Left.Derivative += Derivative*-Right;
+            Right.Derivative += Derivative*Left;
+
+            Left.Differentiate();
+            Right.Differentiate();
+        }
     }
 }
