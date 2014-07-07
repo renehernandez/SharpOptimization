@@ -1,8 +1,9 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOptimization.AutoDiff", "SharpOptimization.AutoDiff\SharpOptimization.AutoDiff.csproj", "{F1CCE160-F0BB-48AC-B939-B83D9C016B32}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOptimization.Numeric", "SharpOptimization.Numeric\SharpOptimization.Numeric.csproj", "{91798526-14CC-412F-A83A-A794CB036912}"
 EndProject
 Global
@@ -11,6 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1CCE160-F0BB-48AC-B939-B83D9C016B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1CCE160-F0BB-48AC-B939-B83D9C016B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1CCE160-F0BB-48AC-B939-B83D9C016B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1CCE160-F0BB-48AC-B939-B83D9C016B32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91798526-14CC-412F-A83A-A794CB036912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{91798526-14CC-412F-A83A-A794CB036912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91798526-14CC-412F-A83A-A794CB036912}.Release|Any CPU.ActiveCfg = Release|Any CPU
