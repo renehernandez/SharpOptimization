@@ -1,15 +1,15 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharpOptimization.AutoDiff")]
+[assembly: AssemblyTitle("SharpOptimization.Numeric")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SharpOptimization.AutoDiff")]
+[assembly: AssemblyProduct("SharpOptimization.Numeric")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4d34fd94-7fb4-41d0-992a-b15d3a40b545")]
+[assembly: Guid("17e913d7-abe7-4100-90f4-0ff27655a0fa")]
 
 // Version information for an assembly consists of the following four values:
 //

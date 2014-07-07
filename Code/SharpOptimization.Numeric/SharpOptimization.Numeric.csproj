@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F1CCE160-F0BB-48AC-B939-B83D9C016B32}</ProjectGuid>
+    <ProjectGuid>{91798526-14CC-412F-A83A-A794CB036912}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpOptimization.AutoDiff</RootNamespace>
-    <AssemblyName>SharpOptimization.AutoDiff</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>SharpOptimization.Numeric</RootNamespace>
+    <AssemblyName>SharpOptimization.Numeric</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -39,22 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compiler\CompiledTerm.cs" />
-    <Compile Include="Constant.cs" />
-    <Compile Include="DMath.cs" />
-    <Compile Include="Func.cs" />
-    <Compile Include="FuncDelegator.cs" />
-    <Compile Include="Funcs\AddFunc.cs" />
-    <Compile Include="Funcs\BinaryFunc.cs" />
-    <Compile Include="Funcs\DivideFunc.cs" />
-    <Compile Include="Funcs\IdentityFunc.cs" />
-    <Compile Include="Funcs\MinusFunc.cs" />
-    <Compile Include="Funcs\MultiplyFunc.cs" />
-    <Compile Include="Funcs\SubtractFunc.cs" />
-    <Compile Include="Funcs\UnaryFunc.cs" />
+    <Compile Include="Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Term.cs" />
-    <Compile Include="Variable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
