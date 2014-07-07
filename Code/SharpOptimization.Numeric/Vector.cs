@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,33 +7,178 @@ using System.Text;
 
 namespace SharpOptimization.Numeric
 {
-    public class Vector<T>
+    public class Vector : IEnumerable<double>
     {
 
-        private static Func<T, T, T> addFunc;
+        # region Private Fields
 
-        private static Func<T, T, T> subtractFunc;
+        private List<double> values;
 
-        private static Func<T, T, T> multiplyFunc;
+        # endregion
 
-        private static Func<T, T, T> divFunc;
+        # region Public Properties
 
-        static Vector()
+        public int Length
         {
-            addFunc = Add();
+            get { return values.Count; }
+        }
+
+        public double this[int index]
+        {
+            get { return values[index]; }
+            set { values[index] = value; }
+        }
+
+        # endregion
+
+
+        # region Constructors
+
+        public Vector(params double[] values)
+        {
+            this.values = new List<double>(values);
+        }
+
+        public Vector(IEnumerable<double> values)
+        {
+            this.values = new List<double>(values);
+        }
+
+        # endregion
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("[");
+
+            if (values.Count > 0)
+            {
+                sb.Append(values[0]);
+
+                for (int i = 1; i < values.Count; i++)
+                {
+                    sb.Append(string.Format(", {0}", values[i]));
+                }
+            }
+            sb.Append("]");
+
+            return sb.ToString();
+        }
+
+        public double Dot(Vector right)
+        {
+            if(Length != right.Length)
+                throw new Exception("Different vectors length");
+
+            if (Length == 0)
+                throw new Exception("Vector length must be greater than zero for Dot Operation");
+
+            return (this * right).Sum();
+        }
+
+        # region Operators
+
+
+        public static implicit operator double[](Vector vector)
+        {
+            return vector.values.ToArray();
+        }
+
+        public static implicit operator Vector(double[] values)
+        {
+            return new Vector(values);
+        }
+
+        public static Vector operator -(Vector vector)
+        {
+            return new Vector(vector.Select(x => -x));
+        }
+
+        public static Vector operator +(double value, Vector vector)
+        {
+            return vector + value;
         } 
 
-        public static Func<T, T, T> Add()
+        public static Vector operator +(Vector vector, double value)
         {
-            var type = typeof (T);
-
-            var left = Expression.Parameter(type);
-            var right = Expression.Parameter(type);
-
-            var lambda = Expression.Lambda<Func<T, T, T>>(Expression.Add(left, right), left, right);
-
-            return lambda.Compile();
+            return new Vector(vector.Select(x => x + value));
         } 
+
+        public static Vector operator +(Vector left, Vector right)
+        {
+            if (left.Length != right.Length)
+                throw new Exception("Different vectors length");
+            return new Vector(left.Select((x, i) => x + right[i]));
+        }
+
+        public static Vector operator -(double value, Vector vector)
+        {
+            return new Vector(vector.Select(x => value - x));
+        } 
+
+        public static Vector operator -(Vector vector, double value)
+        {
+            return new Vector(vector.Select(x => x - value));
+        } 
+
+        public static Vector operator -(Vector left, Vector right)
+        {
+            if (left.Length != right.Length)
+                throw new Exception("Different vectors length");
+            return new Vector(left.Select((x, i) => x - right[i]));
+        }
+
+        public static Vector operator *(double value, Vector vector)
+        {
+            return vector*value;
+        }
+
+        public static Vector operator *(Vector vector, double value)
+        {
+            return new Vector(vector.Select(x => x*value));
+        } 
+
+        public static Vector operator *(Vector left, Vector right)
+        {
+            if (left.Length != right.Length)
+                throw new Exception("Different vectors length");
+
+            return new Vector(left.Select((x, i) => x*right[i]));
+        }
+
+        public static Vector operator /(Vector vector, double value)
+        {
+            return new Vector(vector.Select(x => x/value));
+        }
+
+        public static Vector operator /(double value, Vector vector)
+        {
+            return new Vector(vector.Select(x => value/x));
+        } 
+
+        public static Vector operator /(Vector left, Vector right)
+        {
+            if (left.Length != right.Length)
+                throw new Exception("Different vectors length");
+
+            return new Vector(left.Select((x, i) => x/right[i]));
+        }
+
+        # endregion
+
+
+        # region IEnumerable Interface
+
+        public IEnumerator<double> GetEnumerator()
+        {
+            return values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        # endregion
 
     }
 }
