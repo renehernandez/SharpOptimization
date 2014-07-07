@@ -31,7 +31,6 @@ namespace SharpOptimization.Numeric
 
         # endregion
 
-
         # region Constructors
 
         public Vector(params double[] values)
@@ -74,7 +73,7 @@ namespace SharpOptimization.Numeric
 
             return (this * right).Sum();
         }
-
+        
         public Vector Normalize()
         {
             double sqrt = Math.Sqrt(Dot(this));
@@ -171,7 +170,6 @@ namespace SharpOptimization.Numeric
         }
 
         # endregion
-
 
         # region IEnumerable Interface
 
