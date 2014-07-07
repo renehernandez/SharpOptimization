@@ -75,6 +75,13 @@ namespace SharpOptimization.Numeric
             return (this * right).Sum();
         }
 
+        public Vector Normalize()
+        {
+            double sqrt = Math.Sqrt(Dot(this));
+
+            return this/sqrt;
+        }
+
         # region Operators
 
 
