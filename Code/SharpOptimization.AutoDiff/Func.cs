@@ -4,13 +4,13 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.AutoDiff.Funcs;
 
 namespace SharpOptimization.AutoDiff
 {
     public abstract class Func : Term
     {
-        protected Func[] Derivatives { get; set; }
 
         protected Func<double[], double> Evaluator { get; set; }
 
@@ -20,12 +20,15 @@ namespace SharpOptimization.AutoDiff
         internal Func(Func<double[], double> evaluator, Func< double[], double[]> diff)
         {
             this.Evaluator = evaluator;
-            this.Diff = diff;        }
+            this.Diff = diff;        
+        }
 
-        //internal override Func<double[], double> Compile()
-        //{
-        //    return evaluator;
-        //}
+        public CompiledTerm Compile(params Variable[] vars)
+        {
+            MakeDifferentiation(vars);
+            var gradient = vars.Select(v => v.Derivative.InternalCompile());
+            return new CompiledTerm(InternalCompile(), gradient);
+        }
 
         public double Eval(Variable[] vars, params double[] values)
         {
@@ -43,6 +46,13 @@ namespace SharpOptimization.AutoDiff
 
         public double[] Differentiate(Variable[] vars, params double[] values)
         {
+            MakeDifferentiation(vars);
+
+            return vars.Select(v => v.Derivative.Evaluate(values)).ToArray();
+        }
+
+        private void MakeDifferentiation(Variable[] vars)
+        {
             for (int i = 0; i < vars.Length; i++)
             {
                 vars[i].SetIndex(i);
@@ -50,8 +60,6 @@ namespace SharpOptimization.AutoDiff
 
             ResetDerivative();
             Differentiate();
-
-            return vars.Select(v => v.Derivative.Evaluate(values)).ToArray();
         }
 
     }

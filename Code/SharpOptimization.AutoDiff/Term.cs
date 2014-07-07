@@ -34,6 +34,8 @@ namespace SharpOptimization.AutoDiff
 
         internal abstract double Evaluate(params double[] values);
 
+        internal abstract Func<double[], double> InternalCompile();
+
         //internal abstract double[] Differentiate(params double[] values);
 
         internal abstract void ResetDerivative();

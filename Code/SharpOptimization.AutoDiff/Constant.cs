@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,14 @@ namespace SharpOptimization.AutoDiff
         internal override double Evaluate(params double[] values)
         {
             return Value;
+        }
+
+        internal override Func<double[], double> InternalCompile()
+        {
+            var values = Expression.Parameter(typeof(double[]));
+            var body = Expression.Constant(Value, typeof (double));
+            var lambda = Expression.Lambda<Func<double[], double>>(body, values);
+            return lambda.Compile();
         }
 
         internal override void ResetDerivative()

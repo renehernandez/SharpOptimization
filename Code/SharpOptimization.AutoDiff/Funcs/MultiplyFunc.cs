@@ -9,6 +9,14 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
         }
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var left = Left.InternalCompile();
+            var right = Right.InternalCompile();
+
+            return values => left(values) * right(values);
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)

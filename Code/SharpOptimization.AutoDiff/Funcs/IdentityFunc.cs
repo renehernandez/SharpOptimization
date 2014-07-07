@@ -25,6 +25,13 @@ namespace SharpOptimization.AutoDiff.Funcs
             return new IdentityFunc(constant, constant.Evaluate, null);
         }
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return func;
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)

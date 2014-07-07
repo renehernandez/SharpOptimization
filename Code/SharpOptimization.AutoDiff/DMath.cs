@@ -50,6 +50,13 @@ namespace SharpOptimization.AutoDiff
             Inner.Parent = this;
         }
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => Math.Sqrt(func(values));
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)
@@ -68,6 +75,13 @@ namespace SharpOptimization.AutoDiff
             : base(inner, values => Math.Cos(inner.Evaluate(values)), null)
         {
             Inner.Parent = this;
+        }
+
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => Math.Cos(func(values));
         }
 
         internal override void Differentiate()
@@ -89,6 +103,13 @@ namespace SharpOptimization.AutoDiff
             Inner.Parent = this;
         }
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => Math.Exp(func(values));
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)
@@ -106,6 +127,13 @@ namespace SharpOptimization.AutoDiff
         public LnFunc(Term inner) : base(inner, values => Math.Log(inner.Evaluate(values)), null)
         {
             Inner.Parent = this;
+        }
+
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => Math.Log(func(values));
         }
 
         internal override void Differentiate()
@@ -127,6 +155,13 @@ namespace SharpOptimization.AutoDiff
             Inner.Parent = this;
         }
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => Math.Sqrt(func(values));
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)
@@ -146,6 +181,14 @@ namespace SharpOptimization.AutoDiff
         {
             Left.Parent = this;
             Right.Parent = this;
+        }
+
+        internal override Func<double[], double> InternalCompile()
+        {
+            var left = Left.InternalCompile();
+            var right = Right.InternalCompile();
+
+            return values => Math.Pow(left(values), right(values));
         }
 
         internal override void Differentiate()

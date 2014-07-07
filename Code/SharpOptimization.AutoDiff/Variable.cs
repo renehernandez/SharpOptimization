@@ -31,11 +31,6 @@ namespace SharpOptimization.AutoDiff
 
         # endregion
 
-        //internal override Func<double[], double> Compile()
-        //{
-        //    return Evaluate;
-        //}
-
         internal Variable SetIndex(int index)
         {
             Index = index;
@@ -56,6 +51,15 @@ namespace SharpOptimization.AutoDiff
         //{
         //    throw new NotImplementedException();
         //}
+
+
+        internal override Func<double[], double> InternalCompile()
+        {
+            var values = Expression.Parameter(typeof (double[]));
+            var body = Expression.ArrayIndex(values, Expression.Constant(Index));
+            var lambda = Expression.Lambda<Func<double[], double>>(body, values);
+            return lambda.Compile();
+        }
 
         internal override void Differentiate()
         {

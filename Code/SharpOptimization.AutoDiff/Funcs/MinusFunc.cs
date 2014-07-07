@@ -13,6 +13,13 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # endregion
 
+        internal override Func<double[], double> InternalCompile()
+        {
+            var func = Inner.InternalCompile();
+
+            return values => -func(values);
+        }
+
         internal override void Differentiate()
         {
             if (Parent == null)
