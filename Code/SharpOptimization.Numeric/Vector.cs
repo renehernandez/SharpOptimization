@@ -94,6 +94,21 @@ namespace SharpOptimization.Numeric
             return new Vector(values);
         }
 
+        public static implicit operator Vector(int[] values)
+        {
+            return new Vector(values.Cast<double>());
+        }
+
+        public static implicit operator Vector(long[] values)
+        {
+            return new Vector(values.Cast<double>());
+        }
+
+        public static implicit operator Vector(float[] values)
+        {
+            return new Vector(values.Cast<double>());
+        }
+
         public static Vector operator -(Vector vector)
         {
             return new Vector(vector.Select(x => -x));

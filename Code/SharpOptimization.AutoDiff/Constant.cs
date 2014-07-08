@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using SharpOptimization.AutoDiff.Funcs;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff
 {
@@ -24,16 +25,16 @@ namespace SharpOptimization.AutoDiff
         //    return Evaluate;
         //}
 
-        internal override double Evaluate(params double[] values)
+        internal override double Evaluate(Vector values)
         {
             return Value;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
-            var values = Expression.Parameter(typeof(double[]));
+            var values = Expression.Parameter(typeof(Vector));
             var body = Expression.Constant(Value, typeof (double));
-            var lambda = Expression.Lambda<Func<double[], double>>(body, values);
+            var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
             return lambda.Compile();
         }
 

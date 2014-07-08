@@ -1,4 +1,5 @@
 ﻿using System;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
@@ -7,13 +8,13 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # region Constructor
 
-        internal MinusFunc(Term inner) : base(inner, values => - inner.Evaluate(values), null)
+        internal MinusFunc(Term inner) : base(inner, values => - inner.Evaluate(values))
         {
         }
 
         # endregion
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
@@ -13,7 +14,7 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         public Term Right { get; set; }
 
-        internal BinaryFunc(Term left, Term right, Func<double[], double> evaluator, Func<double[], double[]> diff) : base(evaluator, diff)
+        internal BinaryFunc(Term left, Term right, Func<Vector, double> evaluator) : base(evaluator)
         {
             Left = left;
             Right = right;

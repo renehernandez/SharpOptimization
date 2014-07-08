@@ -1,15 +1,16 @@
 ﻿using System;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class MultiplyFunc: BinaryFunc
     {
 
-        public MultiplyFunc(Term left, Term right) : base(left, right, values => left.Evaluate(values) * right.Evaluate(values), null)
+        public MultiplyFunc(Term left, Term right) : base(left, right, values => left.Evaluate(values) * right.Evaluate(values))
         {
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var left = Left.InternalCompile();
             var right = Right.InternalCompile();
