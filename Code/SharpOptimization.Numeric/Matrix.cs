@@ -102,7 +102,20 @@ namespace SharpOptimization.Numeric
 
         public Matrix Dot(Vector vector)
         {
-            return Dot(new Matrix(vector));
+            return Dot(new Matrix(vector).Transpose());
+        }
+
+        public Matrix Transpose()
+        {
+            var res = new Matrix(Columns, Rows);
+
+            for (int i = 0; i < Rows; i++)
+                for (int j = 0; j < Columns; j++)
+                {
+                    res[j, i] = this[i, j];
+                }
+
+            return res;
         }
 
         public override string ToString()
