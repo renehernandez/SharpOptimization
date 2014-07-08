@@ -33,9 +33,34 @@ namespace SharpOptimization.Numeric
 
         # region Constructors
 
+        public Vector(int n)
+        {
+            values = new List<double>(Enumerable.Repeat(0.0, n));
+        }
+
         public Vector(params double[] values)
         {
             this.values = new List<double>(values);
+        }
+
+        public Vector(params int[] values)
+        {
+            this.values = new List<double>(values.Select(x => x * 1.0));
+        }
+
+        public Vector(IEnumerable<int> values)
+        {
+            this.values = new List<double>(values.Select(x => x * 1.0));
+        }
+
+        public Vector(params long[] values)
+        {
+            this.values = new List<double>(values.Select(x => x * 1.0));
+        }
+
+        public Vector(IEnumerable<long> values)
+        {
+            this.values = new List<double>(values.Select(x => x * 1.0));
         }
 
         public Vector(IEnumerable<double> values)
@@ -79,6 +104,16 @@ namespace SharpOptimization.Numeric
             double sqrt = Math.Sqrt(Dot(this));
 
             return this/sqrt;
+        }
+
+        public static Vector Ones(int n)
+        {
+            return new Vector(Enumerable.Repeat(1, n));
+        }
+
+        public static Vector Zeros(int n)
+        {
+            return new Vector(Enumerable.Repeat(0, n));
         }
 
         # region Operators
