@@ -8,7 +8,7 @@ using SharpOptimization.Numeric;
 namespace SharpOptimization.Optimizer
 {
     public class QnOptimizer : AbstractOptimizer
-    { 
+    {
         public QnOptimizer(int iterations) : base(iterations)
         {
         }
