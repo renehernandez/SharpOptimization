@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpOptimization.AutoDiff">
+      <HintPath>..\SharpOptimization.AutoDiff\bin\Debug\SharpOptimization.AutoDiff.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpOptimization.Numeric">
+      <HintPath>..\SharpOptimization.Numeric\bin\Debug\SharpOptimization.Numeric.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
