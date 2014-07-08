@@ -6,20 +6,20 @@ using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Compiler
 {
-    public class CompiledTerm
+    public class CompiledFunc
     {
 
         public Func<Vector, double> Evaluator { get; private set; }
 
         public Func<Vector, double>[] GradientEvaluator { get; private set; }
 
-        public CompiledTerm(Func<Vector, double> evaluator, IEnumerable<Func<Vector, double>> gradient)
+        public CompiledFunc(Func<Vector, double> evaluator, IEnumerable<Func<Vector, double>> gradient)
         {
             Evaluator = evaluator;
             GradientEvaluator = gradient.ToArray();
         }
 
-        public CompiledTerm(Func<Vector, double> evaluator, params Func<Vector, double>[] gradient)
+        public CompiledFunc(Func<Vector, double> evaluator, params Func<Vector, double>[] gradient)
         {
             Evaluator = evaluator;
             GradientEvaluator = gradient;
