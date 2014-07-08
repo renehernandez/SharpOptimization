@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Linq.Expressions;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class AddFunc : BinaryFunc
     {
         public AddFunc(Term left, Term right)
-            : base(left, right, values => left.Evaluate(values) + right.Evaluate(values), null)
+            : base(left, right, values => left.Evaluate(values) + right.Evaluate(values))
         {
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var left = Left.InternalCompile();
             var right = Right.InternalCompile();

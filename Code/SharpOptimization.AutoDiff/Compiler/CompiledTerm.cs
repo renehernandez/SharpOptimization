@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Compiler
 {
     public class CompiledTerm
     {
 
-        public ReadOnlyCollection<Variable> Variables { get; private set; }
+        public Func<Vector, double> Evaluator { get; private set; }
 
-        public Func<double[], double> Evaluator { get; private set; }
+        public Func<Vector, double>[] GradientEvaluator { get; private set; }
 
-        public Func<double[], double>[] GradientEvaluator { get; private set; }
-
-        public CompiledTerm(Func<double[], double> evaluator, IEnumerable<Func<double[], double>> gradient)
+        public CompiledTerm(Func<Vector, double> evaluator, IEnumerable<Func<Vector, double>> gradient)
         {
             Evaluator = evaluator;
             GradientEvaluator = gradient.ToArray();
         }
 
-        public CompiledTerm(Func<double[], double> evaluator, params Func<double[], double>[] gradient)
+        public CompiledTerm(Func<Vector, double> evaluator, params Func<Vector, double>[] gradient)
         {
             Evaluator = evaluator;
             GradientEvaluator = gradient;

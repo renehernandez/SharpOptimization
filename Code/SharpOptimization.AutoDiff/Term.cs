@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.AutoDiff.Funcs;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff
 {
@@ -31,12 +32,9 @@ namespace SharpOptimization.AutoDiff
             return new Constant(value);
         }
 
+        internal abstract double Evaluate(Vector values);
 
-        internal abstract double Evaluate(params double[] values);
-
-        internal abstract Func<double[], double> InternalCompile();
-
-        //internal abstract double[] Differentiate(params double[] values);
+        internal abstract Func<Vector, double> InternalCompile();
 
         internal abstract void ResetDerivative();
 
