@@ -139,6 +139,21 @@ namespace SharpOptimization.Numeric
 
         # region Operators
 
+        public static implicit operator Vector(Matrix matrix)
+        {
+            if(matrix.Rows == 0)
+                throw new Exception("Cannot convert from an empty matrix to vector type");
+            if(matrix.Rows > 1)
+                throw new Exception("Cannot convert from a matrix with more than one row to vector type");
+
+            return matrix[0];
+        }
+
+        public static implicit operator Matrix(Vector vector)
+        {
+            return new Matrix(vector);
+        }
+
         public static Matrix operator +(Matrix left, Matrix right)
         {
             if(left.Rows != right.Rows || left.Columns != right.Columns)
