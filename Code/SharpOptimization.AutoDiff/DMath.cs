@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpOptimization.AutoDiff.Funcs;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff
 {
@@ -45,12 +46,12 @@ namespace SharpOptimization.AutoDiff
     internal class SinFunc : UnaryFunc
     {
         public SinFunc(Term inner)
-            : base(inner, values => Math.Sin(inner.Evaluate(values)), null)
+            : base(inner, values => Math.Sin(inner.Evaluate(values)))
         {
             Inner.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 
@@ -72,12 +73,12 @@ namespace SharpOptimization.AutoDiff
     internal class CosFunc : UnaryFunc
     {
         public CosFunc(Term inner)
-            : base(inner, values => Math.Cos(inner.Evaluate(values)), null)
+            : base(inner, values => Math.Cos(inner.Evaluate(values)))
         {
             Inner.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 
@@ -98,12 +99,12 @@ namespace SharpOptimization.AutoDiff
 
     internal class ExpFunc : UnaryFunc
     {
-        public ExpFunc(Term inner) : base(inner, values => Math.Exp(inner.Evaluate(values)), null)
+        public ExpFunc(Term inner) : base(inner, values => Math.Exp(inner.Evaluate(values)))
         {
             Inner.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 
@@ -124,12 +125,12 @@ namespace SharpOptimization.AutoDiff
 
     internal class LnFunc : UnaryFunc
     {
-        public LnFunc(Term inner) : base(inner, values => Math.Log(inner.Evaluate(values)), null)
+        public LnFunc(Term inner) : base(inner, values => Math.Log(inner.Evaluate(values)))
         {
             Inner.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 
@@ -150,12 +151,12 @@ namespace SharpOptimization.AutoDiff
 
     internal class SqrtFunc : UnaryFunc
     {
-        public SqrtFunc(Term inner) : base(inner, values => Math.Sqrt(inner.Evaluate(values)), null)
+        public SqrtFunc(Term inner) : base(inner, values => Math.Sqrt(inner.Evaluate(values)))
         {
             Inner.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 
@@ -177,13 +178,13 @@ namespace SharpOptimization.AutoDiff
     internal class PowFunc : BinaryFunc
     {
         public PowFunc(Term left, Term right)
-            : base(left, right, values => Math.Pow(left.Evaluate(values), right.Evaluate(values)), null)
+            : base(left, right, values => Math.Pow(left.Evaluate(values), right.Evaluate(values)))
         {
             Left.Parent = this;
             Right.Parent = this;
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var left = Left.InternalCompile();
             var right = Right.InternalCompile();

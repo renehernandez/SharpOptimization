@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.AutoDiff.Funcs;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff
 {
@@ -37,7 +38,7 @@ namespace SharpOptimization.AutoDiff
             return this;
         }
 
-        internal override double Evaluate(params double[] values)
+        internal override double Evaluate(Vector values)
         {
             return values[Index];
         }
@@ -47,17 +48,11 @@ namespace SharpOptimization.AutoDiff
             Derivative = IdentityFunc.Identity(0);
         }
 
-        //internal override double[] Differentiate(params double[] values)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
-            var values = Expression.Parameter(typeof (double[]));
+            var values = Expression.Parameter(typeof (Vector));
             var body = Expression.ArrayIndex(values, Expression.Constant(Index));
-            var lambda = Expression.Lambda<Func<double[], double>>(body, values);
+            var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
             return lambda.Compile();
         }
 

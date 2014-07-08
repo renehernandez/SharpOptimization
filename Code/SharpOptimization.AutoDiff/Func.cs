@@ -6,21 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.AutoDiff.Funcs;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff
 {
     public abstract class Func : Term
     {
 
-        protected Func<double[], double> Evaluator { get; set; }
+        protected Func<Vector, double> Evaluator { get; set; }
 
-        protected Func<double[], double[]> Diff { get; set; }
-
-
-        internal Func(Func<double[], double> evaluator, Func< double[], double[]> diff)
+        internal Func(Func<Vector, double> evaluator)
         {
-            this.Evaluator = evaluator;
-            this.Diff = diff;        
+            Evaluator = evaluator;
         }
 
         public CompiledTerm Compile(params Variable[] vars)
@@ -39,7 +36,7 @@ namespace SharpOptimization.AutoDiff
             return Evaluate(values);
         }
 
-        internal override double Evaluate(params double[] values)
+        internal override double Evaluate(Vector values)
         {
             return Evaluator(values);
         }

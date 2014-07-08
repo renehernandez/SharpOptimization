@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
@@ -11,8 +12,8 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # region Constructors
 
-        internal IdentityFunc(Term inner, Func<double[], double> evaluator, Func<double[], double[]> diff)
-            : base(inner, evaluator, diff)
+        internal IdentityFunc(Term inner, Func<Vector, double> evaluator)
+            : base(inner, evaluator)
         {
         }
 
@@ -22,10 +23,10 @@ namespace SharpOptimization.AutoDiff.Funcs
         public static Func Identity(double value)
         {
             var constant = ToConstant(value);
-            return new IdentityFunc(constant, constant.Evaluate, null);
+            return new IdentityFunc(constant, values => constant.Evaluate(values));
         }
 
-        internal override Func<double[], double> InternalCompile()
+        internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
 

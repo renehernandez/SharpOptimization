@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
@@ -11,7 +12,7 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         public Term Inner { get; set; }
 
-        internal UnaryFunc(Term inner, Func<double[], double> evaluator, Func<double[], double[]> diff) : base(evaluator, diff)
+        internal UnaryFunc(Term inner, Func<Vector, double> evaluator) : base(evaluator)
         {
             Inner = inner;
             Inner.Parent = this;
