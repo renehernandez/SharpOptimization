@@ -9,13 +9,39 @@ namespace SharpOptimization.Optimizer
 {
     public class QnOptimizer : AbstractOptimizer
     {
-        public QnOptimizer(int iterations) : base(iterations)
+
+        public Func<CompiledFunc, Vector, Vector, double> Searcher { get; private set; }
+
+        public Func<CompiledFunc, Matrix, Vector, Vector, Vector> Corrector { get; private set; } 
+
+        public QnOptimizer(Func<CompiledFunc, Vector, Vector, double> searcher, Func<CompiledFunc, Matrix, Vector, Vector, Vector> corrector, int iterations, double eps= 1e-8) : base(iterations, eps)
         {
+            Searcher = searcher;
+            Corrector = corrector;
         }
 
-        protected override Vector Minimize(CompiledFunc func, Vector input)
+        protected override Vector Minimize(CompiledFunc func, Vector x)
         {
-            throw new NotImplementedException();
+            var b = Matrix.Identity(x.Length);
+            
+            var x1 = new Vector(x);
+            Vector d;
+            double a;
+
+            while (CurrentIteration < IterationsNumber)
+            {
+                CurrentIteration++;
+
+                d = -1*b.Dot(func.Differentiate(x));
+                a = Searcher(func, x, d);
+                x1 = x + a*d;
+
+                b = Corrector(func, b, x, x1);
+
+                x = x1;
+            }
+
+            return x1;
         }
     }
 }
