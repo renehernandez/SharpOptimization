@@ -34,7 +34,7 @@ namespace SharpOptimization.Optimizer
         {
             double a = 0;
             double ai = 1;
-            double fPrev= 0, fCurr = 0, diff = 0;
+            double fPrev = 0, fCurr = 0, diff = 0;
 
             double fZero = func.Eval(x);
             var normDir = dir.Normalize();

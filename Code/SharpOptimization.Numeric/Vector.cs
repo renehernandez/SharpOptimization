@@ -101,9 +101,9 @@ namespace SharpOptimization.Numeric
         
         public Vector Normalize()
         {
-            double sqrt = Math.Sqrt(Dot(this));
+            double norm = Algebra.Norm(this);
 
-            return this/sqrt;
+            return this/norm;
         }
 
         public static Vector Ones(int n)
