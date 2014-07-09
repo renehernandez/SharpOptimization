@@ -62,7 +62,6 @@ namespace SharpOptimization.AutoDiff
             //return;
         }
 
-
         public override bool Equals(object obj)
         {
             return Equals(obj as Variable);
@@ -71,6 +70,11 @@ namespace SharpOptimization.AutoDiff
         public bool Equals(Variable other)
         {
             return !ReferenceEquals(other, null) && ReferenceEquals(other, this);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("x{0}", Index);
         }
 
         # region Operators

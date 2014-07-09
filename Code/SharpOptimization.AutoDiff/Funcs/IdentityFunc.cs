@@ -44,5 +44,10 @@ namespace SharpOptimization.AutoDiff.Funcs
             
             Inner.Differentiate();
         }
+
+        public override string ToString()
+        {
+            return Inner.ToString();
+        }
     }
 }
