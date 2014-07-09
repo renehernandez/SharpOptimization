@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractOptimizer.cs" />
+    <Compile Include="Correction.cs" />
+    <Compile Include="LineSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QnOptimizer.cs" />
   </ItemGroup>

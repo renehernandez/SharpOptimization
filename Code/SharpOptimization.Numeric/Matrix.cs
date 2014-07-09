@@ -162,6 +162,14 @@ namespace SharpOptimization.Numeric
             return new Matrix(left.Select((v, i) => v + right[i]));
         }
 
+        public static Matrix operator -(Matrix left, Matrix right)
+        {
+            if (left.Rows != right.Rows || left.Columns != right.Columns)
+                throw new Exception("Matrices dimensions do not match each other");
+
+            return new Matrix(left.Select((v, i) => v - right[i]));
+        }
+
         public static Matrix operator *(double value, Matrix matrix)
         {
             return new Matrix(matrix.Select(v => value*v));

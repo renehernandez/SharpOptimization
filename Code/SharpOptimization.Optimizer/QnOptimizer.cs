@@ -12,12 +12,12 @@ namespace SharpOptimization.Optimizer
 
         public Func<CompiledFunc, Vector, Vector, double> Searcher { get; private set; }
 
-        public Func<CompiledFunc, Matrix, Vector, Vector, Vector> Corrector { get; private set; } 
+        public Func<CompiledFunc, Matrix, Vector, Vector, Matrix> Corrector { get; private set; } 
 
-        public QnOptimizer(Func<CompiledFunc, Vector, Vector, double> searcher, Func<CompiledFunc, Matrix, Vector, Vector, Vector> corrector, int iterations, double eps= 1e-8) : base(iterations, eps)
+        public QnOptimizer(int iterations, Func<CompiledFunc, Vector, Vector, double> searcher = null, Func<CompiledFunc, Matrix, Vector, Vector, Matrix> corrector= null, double eps= 1e-8) : base(iterations, eps)
         {
-            Searcher = searcher;
-            Corrector = corrector;
+            Searcher = searcher ?? LineSearch.Wolfe;
+            Corrector = corrector ?? Correction.Bfgs;
         }
 
         protected override Vector Minimize(CompiledFunc func, Vector x)
