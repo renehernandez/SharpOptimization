@@ -69,6 +69,11 @@ namespace SharpOptimization.AutoDiff
             return Value.Equals(other.Value);
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         # region Operators
 
         public static bool operator ==(Constant x, Constant y)
