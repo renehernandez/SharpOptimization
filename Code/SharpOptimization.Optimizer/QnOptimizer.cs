@@ -32,16 +32,20 @@ namespace SharpOptimization.Optimizer
             {
                 CurrentIteration++;
 
-                d = -1*b.Dot(func.Differentiate(x));
+                d = -b.Dot(func.Differentiate(x));
+                
                 a = Searcher(func, x, d);
                 x1 = x + a*d;
 
                 b = Corrector(func, b, x, x1);
 
+                if (Algebra.Norm(x1 - x) <= EPS || !Algebra.IsValid(x1))
+                    break;
+
                 x = x1;
             }
 
-            return x1;
+            return x;
         }
     }
 }

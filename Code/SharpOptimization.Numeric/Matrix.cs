@@ -160,6 +160,11 @@ namespace SharpOptimization.Numeric
             return new Matrix(vector);
         }
 
+        public static Matrix operator -(Matrix matrix)
+        {
+            return new Matrix(matrix.Select(v => -v));
+        }
+
         public static Matrix operator +(Matrix left, Matrix right)
         {
             if(left.Rows != right.Rows || left.Columns != right.Columns)

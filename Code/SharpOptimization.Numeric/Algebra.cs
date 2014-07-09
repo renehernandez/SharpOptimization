@@ -13,5 +13,10 @@ namespace SharpOptimization.Numeric
             return Math.Sqrt(x.Dot(x));
         }
 
+        public static bool IsValid(Vector x)
+        {
+            return x.All(xi => !double.IsInfinity(xi) && ! double.IsNaN(xi));
+        }
+
     }
 }
