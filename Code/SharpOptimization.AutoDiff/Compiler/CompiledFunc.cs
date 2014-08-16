@@ -30,7 +30,7 @@ namespace SharpOptimization.AutoDiff.Compiler
             return Evaluator(values);
         }
 
-        public double[] Differentiate(params double[] values)
+        public Vector Differentiate(params double[] values)
         {
             return GradientEvaluator.Select(df => df(values)).ToArray();
         }

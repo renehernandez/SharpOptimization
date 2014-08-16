@@ -50,10 +50,11 @@ namespace SharpOptimization.AutoDiff
 
         internal override Func<Vector, double> InternalCompile()
         {
-            var values = Expression.Parameter(typeof (Vector));
-            var body = Expression.ArrayIndex(values, Expression.Constant(Index));
-            var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
-            return lambda.Compile();
+            //var values = Expression.Parameter(typeof (Vector));
+            //var body = Expression.ArrayIndex(values, Expression.Constant(Index));
+            //var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
+            //return lambda.Compile();
+            return values => values[Index];
         }
 
         internal override void Differentiate()

@@ -80,7 +80,7 @@ namespace SharpOptimization.Numeric
 
         public Matrix Dot(Matrix matrix)
         {
-            if(this.Columns != matrix.Rows)
+            if(Columns != matrix.Rows)
                 throw new Exception("Unmatched dimensions for dot operation");
 
             var res = new Matrix(Rows, matrix.Columns);
@@ -141,17 +141,28 @@ namespace SharpOptimization.Numeric
 
         public static implicit operator Vector(Matrix matrix)
         {
-            if(matrix.Rows == 0)
+            if(matrix.Rows == 0 || matrix.Columns == 0)
                 throw new Exception("Cannot convert from an empty matrix to vector type");
-            if(matrix.Rows > 1)
-                throw new Exception("Cannot convert from a matrix with more than one row to vector type");
 
-            return matrix[0];
+            if (matrix.Rows == 1)
+                return matrix[0];
+
+            if (matrix.Columns == 1)
+            {
+                return Enumerable.Range(0, matrix.Rows).Select(i => matrix[i][0]).ToArray();
+            }
+
+            throw new Exception("Cannot convert from a matrix with more than one row or column to vector type");
         }
 
         public static implicit operator Matrix(Vector vector)
         {
             return new Matrix(vector);
+        }
+
+        public static Matrix operator -(Matrix matrix)
+        {
+            return new Matrix(matrix.Select(v => -v));
         }
 
         public static Matrix operator +(Matrix left, Matrix right)
@@ -160,6 +171,14 @@ namespace SharpOptimization.Numeric
                 throw new Exception("Matrices dimensions do not match each other");
 
             return new Matrix(left.Select((v, i) => v + right[i]));
+        }
+
+        public static Matrix operator -(Matrix left, Matrix right)
+        {
+            if (left.Rows != right.Rows || left.Columns != right.Columns)
+                throw new Exception("Matrices dimensions do not match each other");
+
+            return new Matrix(left.Select((v, i) => v - right[i]));
         }
 
         public static Matrix operator *(double value, Matrix matrix)
