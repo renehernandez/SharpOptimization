@@ -43,20 +43,20 @@ namespace SharpOptimization.Numeric
             this.values = new List<double>(values);
         }
 
-        public Vector(params int[] values)
-        {
-            this.values = new List<double>(values.Select(x => x * 1.0));
-        }
+        //public Vector(params int[] values)
+        //{
+        //    this.values = new List<double>(values.Select(x => x * 1.0));
+        //}
 
         public Vector(IEnumerable<int> values)
         {
             this.values = new List<double>(values.Select(x => x * 1.0));
         }
 
-        public Vector(params long[] values)
-        {
-            this.values = new List<double>(values.Select(x => x * 1.0));
-        }
+        //public Vector(params long[] values)
+        //{
+        //    this.values = new List<double>(values.Select(x => x * 1.0));
+        //}
 
         public Vector(IEnumerable<long> values)
         {
