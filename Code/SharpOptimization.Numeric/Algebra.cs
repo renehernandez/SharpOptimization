@@ -8,12 +8,12 @@ namespace SharpOptimization.Numeric
     public static class Algebra
     {
 
-        public static double Norm(Vector x)
+        public static double Norm(this Vector x)
         {
             return Math.Sqrt(x.Dot(x));
         }
 
-        public static bool IsValid(Vector x)
+        public static bool IsValid(this Vector x)
         {
             return x.All(xi => !double.IsInfinity(xi) && ! double.IsNaN(xi));
         }

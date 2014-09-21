@@ -15,8 +15,8 @@ namespace SharpOptimization.Optimizer
             var sk = new Matrix(x1 - x);
             var yk = new Matrix(func.Differentiate(x1) - func.Differentiate(x));
 
-            var t = b.Dot(sk.Transpose()).Dot(sk)*b/sk.Dot(b).Dot(sk.Transpose())[0][0];
-            var t1 = yk.Transpose().Dot(yk)/yk.Dot(sk.Transpose())[0][0];
+            var t = b.Dot(sk.Transpose()).Dot(sk).Dot(b)/sk.Dot(b).Dot(sk.Transpose())[0,0];
+            var t1 = yk.Transpose().Dot(yk)/yk.Dot(sk.Transpose())[0,0];
 
             return b - t + t1;
         }
