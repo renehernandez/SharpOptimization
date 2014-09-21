@@ -16,7 +16,7 @@ namespace SharpOptimization.Optimizer
 
         public double EPS { get; private set; }
 
-        protected AbstractOptimizer(int iterations, double eps = 1e-8)
+        protected AbstractOptimizer(int iterations, double eps)
         {
             IterationsNumber = iterations;
             EPS = eps;

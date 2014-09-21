@@ -39,7 +39,7 @@ namespace SharpOptimization.Optimizer
 
                 b = Corrector(func, b, x, x1);
 
-                if (Algebra.Norm(x1 - x) <= EPS || !Algebra.IsValid(x1))
+                if (!Algebra.IsValid(x1) || Algebra.Norm(x1 - x) <= EPS)
                     break;
 
                 x = x1;

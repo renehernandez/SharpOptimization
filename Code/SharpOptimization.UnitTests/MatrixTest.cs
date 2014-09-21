@@ -102,7 +102,6 @@ namespace SharpOptimization.UnitTests
             Assert.AreEqual(30, res[0, 1]);
             Assert.AreEqual(24, res[1, 0]);
             Assert.AreEqual(30, res[1, 1]);
-
         }
     }
 }
