@@ -10,9 +10,9 @@ namespace SharpOptimization.Optimizer
     public class PsoOptimizer : AbstractOptimizer
     {
 
-        public double GlobalFit { get; set; }
+        public double GlobalFitValue { get; set; }
 
-        public Vector GlobalBest { get; set; }
+        public Vector GlobalBestVector { get; set; }
 
         public PsoOptimizer(int iterations, double eps = 1e-8) : base(iterations, eps)
         {
