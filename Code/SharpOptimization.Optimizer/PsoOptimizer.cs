@@ -13,58 +13,90 @@ namespace SharpOptimization.Optimizer
 
         # region Public Properties
 
-        public double GlobalFitValue { get; private set; }
+        public double GlobalBestFit { get; private set; }
 
-        public Vector GlobalBestVector { get; private set; }
+        public Vector GlobalBestPosition { get; private set; }
 
         public int NumberOfParticles { get; private set; }
 
         public int NumberOfNeighborsByParticle { get; private set; }
 
-        public int NumberOfDimensions { get; private set; }
-
         public Particle[] ParticlesSet { get; private set; }
-
-        public Tuple<Vector, Vector> Bounds { get; private set; }
 
         # endregion
 
         # region Constructors
 
-        public PsoOptimizer(int iterations, int dimensions, int particlesNumber, int neighborsNumber, Tuple<Vector, Vector> bounds, double eps = 1e-8) : base(iterations, eps)
+        public PsoOptimizer(int iterations, int particlesNumber, int neighborsNumber, double eps = 1e-8) : base(iterations, eps)
         {
             if(neighborsNumber >= particlesNumber)
                 throw new Exception("There must be less neighbors than particles quantity");
 
             NumberOfParticles = particlesNumber;
             NumberOfNeighborsByParticle = neighborsNumber;
-            NumberOfDimensions = dimensions;
-            Bounds = bounds;
         }
 
         # endregion
 
         # region Private Methods
 
-        private void SeedPopulation(CompiledFunc func)
+        private void SeedPopulation(CompiledFunc func, Tuple<Vector, Vector> bounds)
         {
             ParticlesSet =
                 Enumerable.Range(0, NumberOfParticles)
-                    .Select(i => new Particle(func, NumberOfDimensions, NumberOfNeighborsByParticle, Bounds, Distributions.NormalFunc(Bounds.Item1[0], Bounds.Item2[0]))).ToArray();
+                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, Distributions.NormalFunc(bounds.Item1[0], bounds.Item2[0]))).ToArray();
 
-            for(int i = 0; i < NumberOfParticles; i++)
+            int index = 0;
+
+            for (int i = 0; i < NumberOfParticles; i++)
+            {
+                if (ParticlesSet[i].BestFit < ParticlesSet[index].BestFit)
+                    index = i;
                 for (int j = 0; j < NumberOfNeighborsByParticle; j++)
                 {
-                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j) % NumberOfParticles];
+                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j)%NumberOfParticles];
                 }
+            }
 
+            GlobalBestPosition = ParticlesSet[index].BestPosition;
+            GlobalBestFit = ParticlesSet[index].BestFit;
         }
 
         # endregion
 
-        protected override Vector Minimize(CompiledFunc func, Vector x)
+        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
-            throw new NotImplementedException();
+            SeedPopulation(func, bounds);
+
+            if (x != null)
+            {
+                double fit = func.Eval(x);
+
+                if (fit < GlobalBestFit)
+                {
+                    GlobalBestFit = fit;
+                    GlobalBestPosition = x;
+                    ParticlesSet[0].BestFit = GlobalBestFit;
+                    ParticlesSet[0].BestPosition = GlobalBestPosition;
+                }
+            }
+
+            while (CurrentIteration < IterationsNumber)
+            {
+                CurrentIteration++;
+
+                foreach (var particle in ParticlesSet)
+                {
+                    particle.UpdateComponents();
+
+                    if (particle.BestFit < GlobalBestFit)
+                    {
+                        GlobalBestFit = particle.BestFit;
+                        GlobalBestPosition = particle.BestPosition;
+                    }
+                }
+            }
+            return GlobalBestPosition;
         }
     }
 }

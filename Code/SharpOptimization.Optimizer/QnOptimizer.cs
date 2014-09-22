@@ -22,7 +22,7 @@ namespace SharpOptimization.Optimizer
             Corrector = corrector ?? RangeCorrection.Bfgs;
         }
 
-        protected override Vector Minimize(CompiledFunc func, Vector x)
+        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
             var b = Matrix.Identity(x.Length);
             

@@ -22,13 +22,13 @@ namespace SharpOptimization.Optimizer.Heuristics
 
         public Tuple<Vector, Vector> Bounds { get; private set; }
 
-        public Vector BestPosition { get; private set; }
+        public Vector BestPosition { get; set; }
 
         public Vector CurrentPosition { get; private set; }
 
         public Vector Velocity { get; private set; }
 
-        public double BestFit { get; private set; }
+        public double BestFit { get; set; }
 
         public double CurrentFit { get; private set; }
 
