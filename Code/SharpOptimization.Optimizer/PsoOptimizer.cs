@@ -42,9 +42,14 @@ namespace SharpOptimization.Optimizer
 
         private void SeedPopulation(CompiledFunc func, Tuple<Vector, Vector> bounds)
         {
+            double min = bounds.Item1.Min();
+            double max = bounds.Item2.Max();
+
+            var dist = Distributions.ExponentialFunc(1/(min*2 + max*2 + 1.5));
+
             ParticlesSet =
                 Enumerable.Range(0, NumberOfParticles)
-                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, Distributions.NormalFunc(bounds.Item1[0], bounds.Item2[0]))).ToArray();
+                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
 
             int index = 0;
 
@@ -87,7 +92,7 @@ namespace SharpOptimization.Optimizer
 
                 foreach (var particle in ParticlesSet)
                 {
-                    particle.UpdateComponents();
+                    particle.Update();
 
                     if (particle.BestFit < GlobalBestFit)
                     {

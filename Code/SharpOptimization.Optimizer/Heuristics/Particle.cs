@@ -57,7 +57,7 @@ namespace SharpOptimization.Optimizer.Heuristics
 
         # region Public Methods
 
-        public void UpdateComponents()
+        public void Update()
         {
             var neighborsBest = BestPositionFromNeighbors();
 
