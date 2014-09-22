@@ -45,7 +45,7 @@ namespace SharpOptimization.Optimizer
             double min = bounds.Item1.Min();
             double max = bounds.Item2.Max();
 
-            var dist = Distributions.ExponentialFunc(1/(min*2 + max*2 + 1.5));
+            var dist = Distributions.ExponentialFunc(1.0/(min*2 + max*2 + 1.5));
 
             ParticlesSet =
                 Enumerable.Range(0, NumberOfParticles)
@@ -65,6 +65,7 @@ namespace SharpOptimization.Optimizer
 
             GlobalBestPosition = ParticlesSet[index].BestPosition;
             GlobalBestFit = ParticlesSet[index].BestFit;
+            CurrentIteration = 0;
         }
 
         # endregion
