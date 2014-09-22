@@ -8,6 +8,8 @@ namespace SharpOptimization.Numeric
     public static class Distributions
     {
 
+        # region Distribution Delegates
+
         public static Func<double> ExponentialFunc(double lambda)
         {
             var random = new Random();
@@ -70,7 +72,37 @@ namespace SharpOptimization.Numeric
                 return res;
             };
 
-        } 
+        }
+
+        # endregion
+
+        # region Distribution Values
+
+        public static double Exponential(double lambda)
+        {
+            return ExponentialFunc(lambda)();
+        }
+
+        public static double Uniform(double a, double b)
+        {
+            return UniformFunc(a, b)();
+        }
+
+        public static double Normal(double mu, double sigma)
+        {
+            return NormalFunc(mu, sigma)();
+        }
+
+        public static double Bernoulli(double p)
+        {
+            return BernoulliFunc(p)();
+        }
+
+        public static double Binomial(double n, double p)
+        {
+            return BinomialFunc(n, p)();
+        }
+        # endregion
 
     }
 }
