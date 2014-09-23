@@ -21,7 +21,7 @@ namespace SharpOptimization.Numeric
             mZ = 362436069;
         }
 
-        public static uint NextUint()
+        private static uint NextUint()
         {
             mZ = 36969 * (mZ & 65535) + (mZ >> 16);
             mW = 18000 * (mW & 65535) + (mW >> 16);
@@ -34,6 +34,12 @@ namespace SharpOptimization.Numeric
             uint u = NextUint();
 
             return (u + 1.0) / ((1 << 30) * 4L + 2);
+        }
+
+        public static void SetSeed(uint z, uint w)
+        {
+            mZ = z;
+            mW = w;
         }
 
     }
