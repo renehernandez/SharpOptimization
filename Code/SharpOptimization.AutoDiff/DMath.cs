@@ -68,7 +68,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*DMath.Cos(Inner);
@@ -100,7 +100,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*-DMath.Sin(Inner);
@@ -131,7 +131,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*DMath.Exp(Inner);
@@ -162,7 +162,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative/Inner;
@@ -193,7 +193,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative * DMath.Sqrt(Inner) / (2 * Inner);
@@ -227,7 +227,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Left.Derivative += Derivative * Right * DMath.Pow(Left, Right - 1);

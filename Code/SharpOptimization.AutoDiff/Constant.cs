@@ -42,7 +42,7 @@ namespace SharpOptimization.AutoDiff
 
         internal override void ResetDerivative()
         {
-            Derivative = IdentityFunc.Identity(0);
+            Derivative = Func.Constant(0);
         }
 
         internal override void Differentiate()

@@ -34,8 +34,8 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         internal override void ResetDerivative()
         {
-            Left.Derivative = IdentityFunc.Identity(0);
-            Right.Derivative = IdentityFunc.Identity(0);
+            Left.Derivative = Func.Constant(0);
+            Right.Derivative = Func.Constant(0);
 
             Left.ResetDerivative();
             Right.ResetDerivative();

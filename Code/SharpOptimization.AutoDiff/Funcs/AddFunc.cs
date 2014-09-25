@@ -30,7 +30,7 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
             Left.Derivative += Derivative;
             Right.Derivative += Derivative;

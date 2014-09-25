@@ -2,34 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using SharpOptimization.Numeric;
 
 namespace SharpOptimization.AutoDiff.Funcs
 {
-    public class IdentityFunc : UnaryFunc
+    internal class ConstantFunc : UnaryFunc
     {
 
         # region Constructors
 
-        internal IdentityFunc(Term inner, Func<Vector, double> evaluator)
-            : base(inner, evaluator)
+        internal ConstantFunc(Term inner, Func<Vector, double> evaluator) : base(inner, evaluator)
         {
-        }
-
-        # endregion
-
-        # region Public Methods
-
-        public static Func Identity(double value)
-        {
-            var constant = ToConstant(value);
-            return new IdentityFunc(constant, constant.Evaluate);
-        }
-
-        public override string ToString()
-        {
-            return Inner.ToString();
         }
 
         # endregion
@@ -47,15 +30,25 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
             if (Parent == null)
             {
-                Derivative = Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative;
-            
+
             Inner.Differentiate();
         }
 
         # endregion
+
+        # region Public Methods
+
+        public override string ToString()
+        {
+            return Inner.ToString();
+        }
+
+        # endregion
+
 
     }
 }

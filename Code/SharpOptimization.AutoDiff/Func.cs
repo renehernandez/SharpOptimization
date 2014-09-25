@@ -30,6 +30,12 @@ namespace SharpOptimization.AutoDiff
 
         # region Public Methods
 
+        public static Func Constant(double value)
+        {
+            var constant = ToConstant(value);
+            return new ConstantFunc(constant, constant.Evaluate);
+        }
+
         public CompiledFunc Compile(params Variable[] vars)
         {
             MakeDifferentiation(vars);
@@ -78,6 +84,5 @@ namespace SharpOptimization.AutoDiff
         }
 
         # endregion
-
     }
 }
