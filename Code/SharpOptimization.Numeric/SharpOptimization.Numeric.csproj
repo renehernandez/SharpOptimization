@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra.cs" />
+    <Compile Include="Distributions.cs" />
     <Compile Include="Matrix.cs" />
+    <Compile Include="MwcRandom.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

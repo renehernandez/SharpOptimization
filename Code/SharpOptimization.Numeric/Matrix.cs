@@ -129,6 +129,12 @@ namespace SharpOptimization.Numeric
             return res;
         }
 
+        public Matrix Copy()
+        {
+            return new Matrix(vectors.Select(v => v.Copy()));
+        }
+
+
         public override string ToString()
         {
             var sb = new StringBuilder("[\n");

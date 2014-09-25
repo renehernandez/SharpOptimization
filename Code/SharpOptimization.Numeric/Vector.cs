@@ -70,6 +70,8 @@ namespace SharpOptimization.Numeric
 
         # endregion
 
+        # region Public Methods
+
         public override string ToString()
         {
             var sb = new StringBuilder("[");
@@ -116,8 +118,14 @@ namespace SharpOptimization.Numeric
             return new Vector(Enumerable.Repeat(0, n));
         }
 
-        # region Operators
+        public Vector Copy()
+        {
+            return new Vector(this.Select(x => x));
+        }
 
+        # endregion
+
+        # region Operators
 
         public static implicit operator double[](Vector vector)
         {
