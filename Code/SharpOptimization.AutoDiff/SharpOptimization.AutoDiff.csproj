@@ -47,8 +47,8 @@
     <Compile Include="FuncDelegator.cs" />
     <Compile Include="Funcs\AddFunc.cs" />
     <Compile Include="Funcs\BinaryFunc.cs" />
+    <Compile Include="Funcs\ConstantFunc.cs" />
     <Compile Include="Funcs\DivideFunc.cs" />
-    <Compile Include="Funcs\IdentityFunc.cs" />
     <Compile Include="Funcs\MinusFunc.cs" />
     <Compile Include="Funcs\MultiplyFunc.cs" />
     <Compile Include="Funcs\SubtractFunc.cs" />

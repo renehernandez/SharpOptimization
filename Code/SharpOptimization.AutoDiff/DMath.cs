@@ -11,6 +11,8 @@ namespace SharpOptimization.AutoDiff
     public static class DMath
     {
 
+        # region Public Methods
+
         public static Func Sin(Term x)
         {
             return new SinFunc(x);
@@ -41,7 +43,11 @@ namespace SharpOptimization.AutoDiff
             return new SqrtFunc(x);
         }
 
+        # endregion
+
     }
+
+    # region Internal DMath Classes
 
     internal class SinFunc : UnaryFunc
     {
@@ -62,7 +68,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*DMath.Cos(Inner);
@@ -94,7 +100,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*-DMath.Sin(Inner);
@@ -125,7 +131,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative*DMath.Exp(Inner);
@@ -156,7 +162,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative/Inner;
@@ -187,7 +193,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative += Derivative * DMath.Sqrt(Inner) / (2 * Inner);
@@ -221,7 +227,7 @@ namespace SharpOptimization.AutoDiff
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Left.Derivative += Derivative * Right * DMath.Pow(Left, Right - 1);
@@ -236,5 +242,7 @@ namespace SharpOptimization.AutoDiff
             return string.Format("({0})**{1}", Left, Right);
         }
     }
+
+# endregion
 
 }

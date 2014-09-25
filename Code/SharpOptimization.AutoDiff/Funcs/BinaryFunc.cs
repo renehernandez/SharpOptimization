@@ -10,9 +10,15 @@ namespace SharpOptimization.AutoDiff.Funcs
     public abstract class BinaryFunc : Func
     {
 
-        public Term Left { get; set; }
+        # region Internal Properties
 
-        public Term Right { get; set; }
+        internal Term Left { get; set; }
+
+        internal Term Right { get; set; }
+
+        # endregion
+
+        # region Constructors
 
         internal BinaryFunc(Term left, Term right, Func<Vector, double> evaluator) : base(evaluator)
         {
@@ -22,18 +28,20 @@ namespace SharpOptimization.AutoDiff.Funcs
             Right.Parent = this;
         }
 
-        //public static FuncDelegator Factory(Func<Variable[], double> lambda, Func<double[], double[]> diff)
-        //{
-        //    return new Func(lambda, diff);
-        //}
+        # endregion
+
+        # region Internal Methods
 
         internal override void ResetDerivative()
         {
-            Left.Derivative = IdentityFunc.Identity(0);
-            Right.Derivative = IdentityFunc.Identity(0);
+            Left.Derivative = Func.Constant(0);
+            Right.Derivative = Func.Constant(0);
 
             Left.ResetDerivative();
             Right.ResetDerivative();
         }
+
+        # endregion
+
     }
 }

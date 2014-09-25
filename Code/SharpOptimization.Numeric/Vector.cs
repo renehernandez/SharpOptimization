@@ -125,7 +125,7 @@ namespace SharpOptimization.Numeric
 
         # endregion
 
-        # region Operators
+        # region Operators Implementation
 
         public static implicit operator double[](Vector vector)
         {

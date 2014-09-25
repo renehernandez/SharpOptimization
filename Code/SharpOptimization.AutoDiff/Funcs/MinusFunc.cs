@@ -14,6 +14,8 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # endregion
 
+        # region Internal Methods
+
         internal override Func<Vector, double> InternalCompile()
         {
             var func = Inner.InternalCompile();
@@ -25,7 +27,7 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Inner.Derivative -= Derivative;
@@ -33,9 +35,16 @@ namespace SharpOptimization.AutoDiff.Funcs
             Inner.Differentiate();
         }
 
+        # endregion
+
+        # region Public Methods
+
         public override string ToString()
         {
             return string.Format("-({0})", Inner);
         }
+
+        # endregion
+
     }
 }

@@ -10,7 +10,13 @@ namespace SharpOptimization.AutoDiff.Funcs
     public abstract class UnaryFunc : Func
     {
 
-        public Term Inner { get; set; }
+        # region Internal Properties
+
+        internal Term Inner { get; set; }
+
+        # endregion
+
+        # region Constructors
 
         internal UnaryFunc(Term inner, Func<Vector, double> evaluator) : base(evaluator)
         {
@@ -18,10 +24,17 @@ namespace SharpOptimization.AutoDiff.Funcs
             Inner.Parent = this;
         }
 
+        # endregion
+
+        # region Internal Methods
+
         internal override void ResetDerivative()
         {
-            Inner.Derivative = IdentityFunc.Identity(0);
+            Inner.Derivative = Func.Constant(0);
             Inner.ResetDerivative();
         }
+
+        # endregion
+
     }
 }

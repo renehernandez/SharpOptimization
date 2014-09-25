@@ -10,6 +10,8 @@ namespace SharpOptimization.Optimizer.Correction
     public static class RangeCorrection
     {
 
+        # region Public Methods
+
         public static Matrix Bfgs(CompiledFunc func, Matrix b, Vector x, Vector x1)
         {
             var sk = new Matrix(x1 - x);
@@ -20,6 +22,8 @@ namespace SharpOptimization.Optimizer.Correction
 
             return b - t + t1;
         }
+
+        # endregion
 
     }
 }

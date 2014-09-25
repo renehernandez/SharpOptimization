@@ -13,9 +13,15 @@ namespace SharpOptimization.AutoDiff
     public abstract class Term
     {
 
+        # region Internal Properties
+
         internal Term Parent { get; set; }
 
         internal Func Derivative { get; set; }
+
+        # endregion
+
+        # region Public Methods
 
         public static Constant Zero()
         {
@@ -32,6 +38,10 @@ namespace SharpOptimization.AutoDiff
             return new Constant(value);
         }
 
+        # endregion
+
+        # region Internal Methods
+
         internal abstract double Evaluate(Vector values);
 
         internal abstract Func<Vector, double> InternalCompile();
@@ -40,7 +50,9 @@ namespace SharpOptimization.AutoDiff
 
         internal abstract void Differentiate();
 
-        # region Operators
+        # endregion
+
+        # region Operators Implementation
 
         public static Func operator -(Term inner)
         {
@@ -107,15 +119,10 @@ namespace SharpOptimization.AutoDiff
             return new MultiplyFunc(left, right);
         }
 
-        # endregion
-
-        # region Conversions
-
         public static implicit operator Term(double value)
         {
             return ToConstant(value);
         }
-
 
         # endregion
 

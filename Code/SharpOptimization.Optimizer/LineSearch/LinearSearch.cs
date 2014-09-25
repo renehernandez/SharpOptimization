@@ -10,6 +10,8 @@ namespace SharpOptimization.Optimizer.LineSearch
     public static class LinearSearch
     {
 
+        # region Public Properties
+
         public static double C1 
         {
             get { return 1e-4; }
@@ -29,6 +31,10 @@ namespace SharpOptimization.Optimizer.LineSearch
         {
             get { return 100; }
         }
+
+        # endregion
+
+        # region Public Methods
 
         public static double Wolfe(CompiledFunc func, Vector x, Vector dir)
         {
@@ -64,6 +70,10 @@ namespace SharpOptimization.Optimizer.LineSearch
             return ai;
         }
 
+        # endregion
+
+        # region Private Methods
+
         private static double Zoom(CompiledFunc func, Vector x, Vector dir, double aLow, double aHigh, double fZero, double diffZero)
         {
             var normDir = dir.Normalize();
@@ -94,6 +104,8 @@ namespace SharpOptimization.Optimizer.LineSearch
 
             return aMid;
         }
+
+        # endregion
 
     }
 }

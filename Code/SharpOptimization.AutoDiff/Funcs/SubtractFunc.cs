@@ -5,9 +5,16 @@ namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class SubtractFunc : BinaryFunc
     {
-        public SubtractFunc(Term left, Term right) : base(left, right, values =>left.Evaluate(values) - right.Evaluate(values))
+
+        # region Constructors
+
+        internal SubtractFunc(Term left, Term right) : base(left, right, values =>left.Evaluate(values) - right.Evaluate(values))
         {
         }
+
+        # endregion
+
+        # region Internal Methods
 
         internal override Func<Vector, double> InternalCompile()
         {
@@ -21,7 +28,7 @@ namespace SharpOptimization.AutoDiff.Funcs
         {
             if (Parent == null)
             {
-                Derivative = IdentityFunc.Identity(1);
+                Derivative = Func.Constant(1);
             }
 
             Left.Derivative += Derivative;
@@ -31,9 +38,16 @@ namespace SharpOptimization.AutoDiff.Funcs
             Right.Differentiate();
         }
 
+        # endregion
+
+        # region Public Methods
+
         public override string ToString()
         {
             return string.Format("{0} - {1}", Left, Right);
         }
+
+        # endregion
+
     }
 }

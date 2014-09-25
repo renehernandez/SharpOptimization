@@ -13,11 +13,27 @@ namespace SharpOptimization.AutoDiff
     public abstract class Func : Term
     {
 
+        # region Protected Properties
+
         protected Func<Vector, double> Evaluator { get; set; }
+
+        # endregion
+
+        # region Constructors
 
         internal Func(Func<Vector, double> evaluator)
         {
             Evaluator = evaluator;
+        }
+
+        # endregion
+
+        # region Public Methods
+
+        public static Func Constant(double value)
+        {
+            var constant = ToConstant(value);
+            return new ConstantFunc(constant, constant.Evaluate);
         }
 
         public CompiledFunc Compile(params Variable[] vars)
@@ -36,17 +52,25 @@ namespace SharpOptimization.AutoDiff
             return Evaluate(values);
         }
 
-        internal override double Evaluate(Vector values)
-        {
-            return Evaluator(values);
-        }
-
         public double[] Differentiate(Variable[] vars, params double[] values)
         {
             MakeDifferentiation(vars);
 
             return vars.Select(v => v.Derivative.Evaluate(values)).ToArray();
         }
+
+        # endregion
+
+        # region Internal Methods
+
+        internal override double Evaluate(Vector values)
+        {
+            return Evaluator(values);
+        }
+
+        # endregion
+
+        # region Private Methods
 
         private void MakeDifferentiation(Variable[] vars)
         {
@@ -59,5 +83,6 @@ namespace SharpOptimization.AutoDiff
             Differentiate();
         }
 
+        # endregion
     }
 }

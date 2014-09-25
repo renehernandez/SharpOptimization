@@ -8,6 +8,8 @@ namespace SharpOptimization.Numeric
     public static class Distributions
     {
 
+        # region Public Methods
+
         # region Distribution Delegates
 
         public static Func<double> ExponentialFunc(double lambda)
@@ -93,6 +95,8 @@ namespace SharpOptimization.Numeric
         {
             return BinomialFunc(n, p)();
         }
+        # endregion
+
         # endregion
 
     }

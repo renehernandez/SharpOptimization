@@ -13,17 +13,22 @@ namespace SharpOptimization.AutoDiff
     public class Constant : Term, IEquatable<Constant>
     {
 
+        # region Protected Properties
+
         protected double Value { get; private set; }
+
+        # endregion
+
+        # region Constructors
 
         public Constant(double value)
         {
             Value = value;
         }
 
-        //internal override Func<double[], double> Compile()
-        //{
-        //    return Evaluate;
-        //}
+        # endregion
+
+        # region Internal Properties
 
         internal override double Evaluate(Vector values)
         {
@@ -32,23 +37,22 @@ namespace SharpOptimization.AutoDiff
 
         internal override Func<Vector, double> InternalCompile()
         {
-            //var values = Expression.Parameter(typeof(Vector));
-            //var body = Expression.Constant(Value, typeof (double));
-            //var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
-            //return lambda.Compile();
-
             return values => Value;
         }
 
         internal override void ResetDerivative()
         {
-            Derivative = IdentityFunc.Identity(0);
+            Derivative = Func.Constant(0);
         }
 
         internal override void Differentiate()
         {
             // return;
         }
+
+        # endregion
+
+        # region Public Methods
 
         public static implicit operator double(Constant constant)
         {
@@ -75,6 +79,8 @@ namespace SharpOptimization.AutoDiff
         {
             return Value.ToString();
         }
+
+        # endregion
 
         # region Operators
 

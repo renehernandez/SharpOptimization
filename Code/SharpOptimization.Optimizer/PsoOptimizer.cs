@@ -38,37 +38,7 @@ namespace SharpOptimization.Optimizer
 
         # endregion
 
-        # region Private Methods
-
-        private void SeedPopulation(CompiledFunc func, Tuple<Vector, Vector> bounds)
-        {
-            double min = bounds.Item1.Min();
-            double max = bounds.Item2.Max();
-
-            var dist = Distributions.ExponentialFunc(1.0/(min*2 + max*2 + 1.5));
-
-            ParticlesSet =
-                Enumerable.Range(0, NumberOfParticles)
-                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
-
-            int index = 0;
-
-            for (int i = 0; i < NumberOfParticles; i++)
-            {
-                if (ParticlesSet[i].BestFit < ParticlesSet[index].BestFit)
-                    index = i;
-                for (int j = 0; j < NumberOfNeighborsByParticle; j++)
-                {
-                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j)%NumberOfParticles];
-                }
-            }
-
-            GlobalBestPosition = ParticlesSet[index].BestPosition;
-            GlobalBestFit = ParticlesSet[index].BestFit;
-            CurrentIteration = 0;
-        }
-
-        # endregion
+        # region Protected Methods
 
         protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
@@ -104,5 +74,41 @@ namespace SharpOptimization.Optimizer
             }
             return GlobalBestPosition;
         }
+
+        # endregion
+
+        # region Private Methods
+
+        private void SeedPopulation(CompiledFunc func, Tuple<Vector, Vector> bounds)
+        {
+            double min = bounds.Item1.Min();
+            double max = bounds.Item2.Max();
+
+            var dist = Distributions.ExponentialFunc(1.0 / (min * 2 + max * 2 + 1.5));
+
+            ParticlesSet =
+                Enumerable.Range(0, NumberOfParticles)
+                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
+
+            int index = 0;
+
+            for (int i = 0; i < NumberOfParticles; i++)
+            {
+                if (ParticlesSet[i].BestFit < ParticlesSet[index].BestFit)
+                    index = i;
+                for (int j = 0; j < NumberOfNeighborsByParticle; j++)
+                {
+                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j) % NumberOfParticles];
+                }
+            }
+
+            GlobalBestPosition = ParticlesSet[index].BestPosition;
+            GlobalBestFit = ParticlesSet[index].BestFit;
+            CurrentIteration = 0;
+        }
+
+        # endregion
+
+
     }
 }

@@ -32,6 +32,8 @@ namespace SharpOptimization.AutoDiff
 
         # endregion
 
+        # region Internal Methods
+
         internal Variable SetIndex(int index)
         {
             Index = index;
@@ -45,15 +47,11 @@ namespace SharpOptimization.AutoDiff
 
         internal override void ResetDerivative()
         {
-            Derivative = IdentityFunc.Identity(0);
+            Derivative = Func.Constant(0);
         }
 
         internal override Func<Vector, double> InternalCompile()
         {
-            //var values = Expression.Parameter(typeof (Vector));
-            //var body = Expression.ArrayIndex(values, Expression.Constant(Index));
-            //var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
-            //return lambda.Compile();
             return values => values[Index];
         }
 
@@ -61,6 +59,10 @@ namespace SharpOptimization.AutoDiff
         {
             //return;
         }
+
+        # endregion
+
+        # region Public Methods
 
         public override bool Equals(object obj)
         {
@@ -76,6 +78,8 @@ namespace SharpOptimization.AutoDiff
         {
             return string.Format("x{0}", Index);
         }
+
+        # endregion
 
         # region Operators
 
