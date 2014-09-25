@@ -11,6 +11,8 @@ namespace SharpOptimization.AutoDiff
     public static class DMath
     {
 
+        # region Public Methods
+
         public static Func Sin(Term x)
         {
             return new SinFunc(x);
@@ -41,7 +43,11 @@ namespace SharpOptimization.AutoDiff
             return new SqrtFunc(x);
         }
 
+        # endregion
+
     }
+
+    # region Internal DMath Classes
 
     internal class SinFunc : UnaryFunc
     {
@@ -236,5 +242,7 @@ namespace SharpOptimization.AutoDiff
             return string.Format("({0})**{1}", Left, Right);
         }
     }
+
+# endregion
 
 }

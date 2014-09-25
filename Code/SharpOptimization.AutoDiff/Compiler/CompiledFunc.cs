@@ -9,11 +9,17 @@ namespace SharpOptimization.AutoDiff.Compiler
     public class CompiledFunc
     {
 
+        # region Public Properties
+
         public Func<Vector, double> Evaluator { get; private set; }
 
         public Func<Vector, double>[] GradientEvaluator { get; private set; }
 
         public int Dimension { get { return GradientEvaluator.Length; } }
+
+        # endregion
+
+        # region Constructors
 
         public CompiledFunc(Func<Vector, double> evaluator, IEnumerable<Func<Vector, double>> gradient)
         {
@@ -27,6 +33,10 @@ namespace SharpOptimization.AutoDiff.Compiler
             GradientEvaluator = gradient;
         }
 
+        # endregion
+
+        # region Public Methods
+
         public double Eval(params double[] values)
         {
             return Evaluator(values);
@@ -36,6 +46,8 @@ namespace SharpOptimization.AutoDiff.Compiler
         {
             return GradientEvaluator.Select(df => df(values)).ToArray();
         }
+
+        # endregion
 
     }
 }

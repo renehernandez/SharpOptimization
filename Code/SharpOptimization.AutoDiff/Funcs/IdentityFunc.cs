@@ -19,12 +19,22 @@ namespace SharpOptimization.AutoDiff.Funcs
 
         # endregion
 
-        // Agregar derivacion cuando se implemente
+        # region Public Methods
+
         public static Func Identity(double value)
         {
             var constant = ToConstant(value);
-            return new IdentityFunc(constant, values => constant.Evaluate(values));
+            return new IdentityFunc(constant, constant.Evaluate);
         }
+
+        public override string ToString()
+        {
+            return Inner.ToString();
+        }
+
+        # endregion
+
+        # region Internal Methods
 
         internal override Func<Vector, double> InternalCompile()
         {
@@ -45,9 +55,7 @@ namespace SharpOptimization.AutoDiff.Funcs
             Inner.Differentiate();
         }
 
-        public override string ToString()
-        {
-            return Inner.ToString();
-        }
+        # endregion
+
     }
 }

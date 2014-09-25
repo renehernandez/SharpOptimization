@@ -8,6 +8,8 @@ namespace SharpOptimization.Numeric
     public static class Algebra
     {
 
+        # region Public Methods
+
         public static double Norm(this Vector x)
         {
             return Math.Sqrt(x.Dot(x));
@@ -17,6 +19,8 @@ namespace SharpOptimization.Numeric
         {
             return x.All(xi => !double.IsInfinity(xi) && ! double.IsNaN(xi));
         }
+
+        # endregion
 
     }
 }

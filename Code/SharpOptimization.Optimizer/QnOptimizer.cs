@@ -12,15 +12,25 @@ namespace SharpOptimization.Optimizer
     public class QnOptimizer : AbstractOptimizer
     {
 
+        # region Public Properties
+
         public Func<CompiledFunc, Vector, Vector, double> Searcher { get; private set; }
 
-        public Func<CompiledFunc, Matrix, Vector, Vector, Matrix> Corrector { get; private set; } 
+        public Func<CompiledFunc, Matrix, Vector, Vector, Matrix> Corrector { get; private set; }
+
+        # endregion
+
+        # region Constructors
 
         public QnOptimizer(int iterations, Func<CompiledFunc, Vector, Vector, double> searcher = null, Func<CompiledFunc, Matrix, Vector, Vector, Matrix> corrector= null, double eps= 1e-8) : base(iterations, eps)
         {
             Searcher = searcher ?? LinearSearch.Wolfe;
             Corrector = corrector ?? RangeCorrection.Bfgs;
         }
+
+        # endregion
+
+        # region Protected Methods
 
         protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
@@ -49,5 +59,8 @@ namespace SharpOptimization.Optimizer
 
             return x;
         }
+
+        # endregion
+
     }
 }

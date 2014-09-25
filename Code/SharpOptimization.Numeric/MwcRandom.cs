@@ -13,6 +13,8 @@ namespace SharpOptimization.Numeric
         private static uint mZ;
         private static uint mW;
 
+        # region Constructors
+
         static MwcRandom()
         {
             // These values are not magical, just the default values Marsaglia used.              
@@ -21,13 +23,9 @@ namespace SharpOptimization.Numeric
             mZ = 362436069;
         }
 
-        private static uint NextUint()
-        {
-            mZ = 36969 * (mZ & 65535) + (mZ >> 16);
-            mW = 18000 * (mW & 65535) + (mW >> 16);
+        # endregion
 
-            return (mZ << 16) + mW;
-        }
+        # region Public Methods
 
         public static double NextDouble()
         {
@@ -41,6 +39,20 @@ namespace SharpOptimization.Numeric
             mZ = z;
             mW = w;
         }
+
+        # endregion
+
+        # region Private Methods
+
+        private static uint NextUint()
+        {
+            mZ = 36969 * (mZ & 65535) + (mZ >> 16);
+            mW = 18000 * (mW & 65535) + (mW >> 16);
+
+            return (mZ << 16) + mW;
+        }
+
+        # endregion
 
     }
 }

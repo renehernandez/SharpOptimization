@@ -6,10 +6,17 @@ namespace SharpOptimization.AutoDiff.Funcs
 {
     internal class AddFunc : BinaryFunc
     {
+
+        # region Constructors
+
         public AddFunc(Term left, Term right)
             : base(left, right, values => left.Evaluate(values) + right.Evaluate(values))
         {
         }
+
+        # endregion
+
+        # region Internal Methods
 
         internal override Func<Vector, double> InternalCompile()
         {
@@ -31,9 +38,16 @@ namespace SharpOptimization.AutoDiff.Funcs
             Right.Differentiate();
         }
 
+        # endregion
+
+        # region Public Methods
+
         public override string ToString()
         {
             return string.Format("{0} + {1}", Left, Right);
         }
+
+        # endregion
+
     }
 }
