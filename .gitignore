@@ -27,3 +27,7 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+ConsoleOptimization/ConsoleOptimization.sln
+ConsoleOptimization/ConsoleOptimization/ConsoleOptimization.csproj
+ConsoleOptimization/ConsoleOptimization/Program.cs
+ConsoleOptimization/ConsoleOptimization/Properties/AssemblyInfo.cs
