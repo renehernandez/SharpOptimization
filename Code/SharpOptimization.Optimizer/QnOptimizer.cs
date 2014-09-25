@@ -13,9 +13,15 @@ namespace SharpOptimization.Optimizer
     {
 
         # region Public Properties
-
+        
+        /// <summary>
+        /// Gets the line search methods used by Quasi-Newton optimization method.
+        /// </summary>
         public Func<CompiledFunc, Vector, Vector, double> Searcher { get; private set; }
 
+        /// <summary>
+        /// Gets the correction formula used by Quasi-Newton optimization method.
+        /// </summary>
         public Func<CompiledFunc, Matrix, Vector, Vector, Matrix> Corrector { get; private set; }
 
         # endregion
@@ -32,8 +38,9 @@ namespace SharpOptimization.Optimizer
 
         # region Protected Methods
 
-        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
+        protected override Vector Minimize(CompiledFunc f, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
+            CurrentIteration = 0;
             var b = Matrix.Identity(x.Length);
             
             var x1 = new Vector(x);
@@ -44,12 +51,12 @@ namespace SharpOptimization.Optimizer
             {
                 CurrentIteration++;
 
-                d = -b.Dot(func.Differentiate(x));
+                d = -b.Dot(f.Differentiate(x));
                 
-                a = Searcher(func, x, d);
+                a = Searcher(f, x, d);
                 x1 = x + a*d;
 
-                b = Corrector(func, b, x, x1);
+                b = Corrector(f, b, x, x1);
 
                 if (!Algebra.IsValid(x1) || Algebra.Norm(x1 - x) <= EPS)
                     break;
