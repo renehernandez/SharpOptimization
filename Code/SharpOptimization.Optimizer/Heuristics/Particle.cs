@@ -76,10 +76,6 @@ namespace SharpOptimization.Optimizer.Heuristics
             BestPosition = CurrentPosition;
         }
 
-        # endregion
-
-        # region Private Methods
-
         public bool IsFeasible()
         {
             for (int i = 0; i < NumberOfDimensions; i++)
@@ -91,6 +87,14 @@ namespace SharpOptimization.Optimizer.Heuristics
             return true;
         }
 
+        # endregion
+
+        # region Private Methods
+
+        /// <summary>
+        /// Finds the best value from the neighbors set of the current particle and particle itself.
+        /// </summary>
+        /// <returns>Returns a vector representing the minimun value known so far by any of the neighbors and the particle.</returns>
         private Vector BestPositionFromNeighbors()
         {
             int pos = 0;
@@ -101,7 +105,7 @@ namespace SharpOptimization.Optimizer.Heuristics
                     pos = i;
                 }
 
-            return Neighbors[pos].BestPosition;
+            return Neighbors[pos].BestFit < BestFit ? Neighbors[pos].BestPosition : BestPosition;
         }
 
         # endregion
