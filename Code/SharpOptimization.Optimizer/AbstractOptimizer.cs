@@ -23,14 +23,14 @@ namespace SharpOptimization.Optimizer
             CurrentIteration = 0;
         }
 
-        public Tuple<Vector, double> FindMinimun(CompiledFunc func, Vector input = null)
+        public Tuple<Vector, double> FindMinimun(CompiledFunc func, Vector input = null, Tuple<Vector, Vector> bounds = null)
         {
-            var res = Minimize(func, input);
+            var res = Minimize(func, input, bounds);
 
             return new Tuple<Vector, double>(res, func.Eval(res));
         }
 
-        protected abstract Vector Minimize(CompiledFunc func, Vector x);
+        protected abstract Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null);
 
     }
 }

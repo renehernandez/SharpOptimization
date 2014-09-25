@@ -5,9 +5,9 @@ using System.Text;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.Numeric;
 
-namespace SharpOptimization.Optimizer
+namespace SharpOptimization.Optimizer.LineSearch
 {
-    public static class LineSearch
+    public static class LinearSearch
     {
 
         public static double C1 

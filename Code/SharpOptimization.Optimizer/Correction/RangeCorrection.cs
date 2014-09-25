@@ -5,9 +5,9 @@ using System.Text;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.Numeric;
 
-namespace SharpOptimization.Optimizer
+namespace SharpOptimization.Optimizer.Correction
 {
-    public static class Correction
+    public static class RangeCorrection
     {
 
         public static Matrix Bfgs(CompiledFunc func, Matrix b, Vector x, Vector x1)

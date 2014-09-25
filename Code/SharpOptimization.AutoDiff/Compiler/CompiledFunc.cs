@@ -13,6 +13,8 @@ namespace SharpOptimization.AutoDiff.Compiler
 
         public Func<Vector, double>[] GradientEvaluator { get; private set; }
 
+        public int Dimension { get { return GradientEvaluator.Length; } }
+
         public CompiledFunc(Func<Vector, double> evaluator, IEnumerable<Func<Vector, double>> gradient)
         {
             Evaluator = evaluator;
