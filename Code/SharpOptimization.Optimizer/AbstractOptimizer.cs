@@ -62,7 +62,7 @@ namespace SharpOptimization.Optimizer
         # region Protected Methods
 
         /// <summary>
-        /// Algorithmic implementation of optimization type to look for the minimun function value.
+        /// Algorithmic implementation of optimization model to look for the minimun function value.
         /// </summary>
         /// <param name="f">Function to which the minimum will be looking for.</param>
         /// <param name="x">Optional vector used as started point for the algorithm to look for.</param>
