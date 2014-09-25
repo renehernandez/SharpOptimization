@@ -13,14 +13,29 @@ namespace SharpOptimization.Optimizer
 
         # region Public Properties
 
+        /// <summary>
+        /// Gets the global best fit known by the entire swarm so far.
+        /// </summary>
         public double GlobalBestFit { get; private set; }
 
+        /// <summary>
+        /// Gets the global best position known by entire swarm so far.
+        /// </summary>
         public Vector GlobalBestPosition { get; private set; }
 
+        /// <summary>
+        /// Gets the number of particles in the swarm.
+        /// </summary>
         public int NumberOfParticles { get; private set; }
 
+        /// <summary>
+        /// Gets the number of neighbors by particle.
+        /// </summary>
         public int NumberOfNeighborsByParticle { get; private set; }
 
+        /// <summary>
+        /// Gets the set of particles representing the swarm.
+        /// </summary>
         public Particle[] ParticlesSet { get; private set; }
 
         # endregion

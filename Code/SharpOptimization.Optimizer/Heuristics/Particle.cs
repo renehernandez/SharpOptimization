@@ -94,7 +94,7 @@ namespace SharpOptimization.Optimizer.Heuristics
         # region Public Methods
 
         /// <summary>
-        /// Updates the current position of the particle following the formulaes defined in the standard paper.
+        /// Updates the current position of the particle following the formulae defined in the standard paper.
         /// </summary>
         public void Update()
         {
