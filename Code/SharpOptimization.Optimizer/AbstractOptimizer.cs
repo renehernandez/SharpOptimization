@@ -12,6 +12,7 @@ namespace SharpOptimization.Optimizer
 
         # region Public Properties
 
+
         public int IterationsNumber { get; private set; }
 
         public int CurrentIteration { get; protected set; }
@@ -33,18 +34,26 @@ namespace SharpOptimization.Optimizer
 
         # region Public Methods
 
-        public Tuple<Vector, double> FindMinimun(CompiledFunc func, Vector input = null, Tuple<Vector, Vector> bounds = null)
+        /// <summary>
+        /// Looks for the vector x that minimizes function f, i.e, vector x such that f(x)  f(y) for all 
+        /// values y in the function search space.
+        /// </summary>
+        /// <param name="f">Function to which the minimum will be looking for.</param>
+        /// <param name="input">Optional vector used as started point for the algorithm to look for.</param>
+        /// <param name="bounds">Optional limits of function space search.</param>
+        /// <returns>Returns a tuple with the minimun vector found by optimizer and the value of the function in this vector.</returns>
+        public Tuple<Vector, double> FindMinimun(CompiledFunc f, Vector input = null, Tuple<Vector, Vector> bounds = null)
         {
-            var res = Minimize(func, input, bounds);
+            var res = Minimize(f, input, bounds);
 
-            return new Tuple<Vector, double>(res, func.Eval(res));
+            return new Tuple<Vector, double>(res, f.Eval(res));
         }
 
         # endregion
 
         # region Protected Methods
 
-        protected abstract Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null);
+        protected abstract Vector Minimize(CompiledFunc f, Vector x = null, Tuple<Vector, Vector> bounds = null);
 
         # endregion
 

@@ -32,7 +32,7 @@ namespace SharpOptimization.Optimizer
 
         # region Protected Methods
 
-        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
+        protected override Vector Minimize(CompiledFunc f, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
             var b = Matrix.Identity(x.Length);
             
@@ -44,12 +44,12 @@ namespace SharpOptimization.Optimizer
             {
                 CurrentIteration++;
 
-                d = -b.Dot(func.Differentiate(x));
+                d = -b.Dot(f.Differentiate(x));
                 
-                a = Searcher(func, x, d);
+                a = Searcher(f, x, d);
                 x1 = x + a*d;
 
-                b = Corrector(func, b, x, x1);
+                b = Corrector(f, b, x, x1);
 
                 if (!Algebra.IsValid(x1) || Algebra.Norm(x1 - x) <= EPS)
                     break;

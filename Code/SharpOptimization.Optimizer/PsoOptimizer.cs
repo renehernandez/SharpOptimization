@@ -40,13 +40,13 @@ namespace SharpOptimization.Optimizer
 
         # region Protected Methods
 
-        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
+        protected override Vector Minimize(CompiledFunc f, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
-            SeedPopulation(func, bounds);
+            SeedPopulation(f, bounds);
 
             if (x != null)
             {
-                double fit = func.Eval(x);
+                double fit = f.Eval(x);
 
                 if (fit < GlobalBestFit)
                 {
@@ -79,7 +79,7 @@ namespace SharpOptimization.Optimizer
 
         # region Private Methods
 
-        private void SeedPopulation(CompiledFunc func, Tuple<Vector, Vector> bounds)
+        private void SeedPopulation(CompiledFunc f, Tuple<Vector, Vector> bounds)
         {
             double min = bounds.Item1.Min();
             double max = bounds.Item2.Max();
@@ -88,7 +88,7 @@ namespace SharpOptimization.Optimizer
 
             ParticlesSet =
                 Enumerable.Range(0, NumberOfParticles)
-                    .Select(i => new Particle(func, func.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
+                    .Select(i => new Particle(f, f.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
 
             int index = 0;
 
