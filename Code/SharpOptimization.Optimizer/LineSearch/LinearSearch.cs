@@ -5,9 +5,9 @@ using System.Text;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.Numeric;
 
-namespace SharpOptimization.Optimizer
+namespace SharpOptimization.Optimizer.LineSearch
 {
-    public static class LineSearch
+    public static class LinearSearch
     {
 
         public static double C1 
@@ -41,12 +41,12 @@ namespace SharpOptimization.Optimizer
 
             double diffZero = (func.Differentiate(x)*normDir).Sum();
 
-            for (int i = 0; i < 10; i++)
+            while(ai < MaxAlpha)
             {
                 fPrev = func.Eval(x + a*dir);
                 fCurr = func.Eval(x + ai*dir);
 
-                if (fCurr > fZero + C1*ai*diffZero || (fCurr > fPrev && i > 1))
+                if (fCurr > fZero + C1*ai*diffZero || (fCurr > fPrev && ai > 1))
                     return Zoom(func, x, dir, a, ai, fZero, diffZero);
 
                 diff = (func.Differentiate(x + ai*dir)*normDir).Sum();
@@ -58,7 +58,7 @@ namespace SharpOptimization.Optimizer
                     return Zoom(func, x, dir, ai, a, fZero, diffZero);
 
                 a = ai;
-                ai = ai < MaxAlpha ? ai*1.5 : ai;
+                ai *= 1.5;
             }
 
             return ai;

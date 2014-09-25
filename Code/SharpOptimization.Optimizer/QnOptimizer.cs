@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SharpOptimization.AutoDiff.Compiler;
 using SharpOptimization.Numeric;
+using SharpOptimization.Optimizer.Correction;
+using SharpOptimization.Optimizer.LineSearch;
 
 namespace SharpOptimization.Optimizer
 {
@@ -16,11 +18,11 @@ namespace SharpOptimization.Optimizer
 
         public QnOptimizer(int iterations, Func<CompiledFunc, Vector, Vector, double> searcher = null, Func<CompiledFunc, Matrix, Vector, Vector, Matrix> corrector= null, double eps= 1e-8) : base(iterations, eps)
         {
-            Searcher = searcher ?? LineSearch.Wolfe;
-            Corrector = corrector ?? Correction.Bfgs;
+            Searcher = searcher ?? LinearSearch.Wolfe;
+            Corrector = corrector ?? RangeCorrection.Bfgs;
         }
 
-        protected override Vector Minimize(CompiledFunc func, Vector x)
+        protected override Vector Minimize(CompiledFunc func, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
             var b = Matrix.Identity(x.Length);
             
@@ -39,7 +41,7 @@ namespace SharpOptimization.Optimizer
 
                 b = Corrector(func, b, x, x1);
 
-                if (Algebra.Norm(x1 - x) <= EPS || !Algebra.IsValid(x1))
+                if (!Algebra.IsValid(x1) || Algebra.Norm(x1 - x) <= EPS)
                     break;
 
                 x = x1;

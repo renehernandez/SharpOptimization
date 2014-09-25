@@ -18,12 +18,6 @@ namespace SharpOptimization.Numeric
 
         public int Columns { get; private set; }
 
-        public Vector this[int index]
-        {
-            get { return vectors[index]; }
-            set { vectors[index] = value; }
-        }
-
         public double this[int row, int column]
         {
             get { return vectors[row][column]; }
@@ -73,6 +67,23 @@ namespace SharpOptimization.Numeric
 
         # endregion
 
+        # region Public Methods
+
+        public Vector GetRow(int i)
+        {
+            if(i < 0 || i >= Rows)
+                throw new Exception("Invalid row index within matrix");
+            return vectors[i];
+        }
+
+        public Vector GetColumn(int i)
+        {
+            if(i < 0 || i >= Columns)
+                throw new Exception("Invalid column index within matrix");
+
+            return new Vector(vectors.Select(v => v[i]));
+        }
+
         public static Matrix Identity(int n)
         {
             return new Matrix(Enumerable.Range(0, n).Select(i => SetOneValue(n, i)));
@@ -118,17 +129,27 @@ namespace SharpOptimization.Numeric
             return res;
         }
 
+        public Matrix Copy()
+        {
+            return new Matrix(vectors.Select(v => v.Copy()));
+        }
+
+
         public override string ToString()
         {
             var sb = new StringBuilder("[\n");
             for (int i = 0; i < Rows; i++)
             {
-                sb.AppendFormat("{0}\n", this[i]);
+                sb.AppendFormat("{0}\n", GetRow(i));
             }
             sb.Append("]");
 
             return sb.ToString();
         }
+
+        # endregion
+
+        # region Private Methods
 
         private static Vector SetOneValue(int n, int pos)
         {
@@ -136,6 +157,8 @@ namespace SharpOptimization.Numeric
             vector[pos] = 1;
             return vector;
         }
+
+        # endregion
 
         # region Operators
 
@@ -145,14 +168,12 @@ namespace SharpOptimization.Numeric
                 throw new Exception("Cannot convert from an empty matrix to vector type");
 
             if (matrix.Rows == 1)
-                return matrix[0];
+                return matrix.GetRow(0);
 
             if (matrix.Columns == 1)
-            {
-                return Enumerable.Range(0, matrix.Rows).Select(i => matrix[i][0]).ToArray();
-            }
+                return matrix.GetColumn(0);
 
-            throw new Exception("Cannot convert from a matrix with more than one row or column to vector type");
+            throw new Exception("Cannot convert from a matrix with more than one row and column to vector type");
         }
 
         public static implicit operator Matrix(Vector vector)
@@ -170,7 +191,7 @@ namespace SharpOptimization.Numeric
             if(left.Rows != right.Rows || left.Columns != right.Columns)
                 throw new Exception("Matrices dimensions do not match each other");
 
-            return new Matrix(left.Select((v, i) => v + right[i]));
+            return new Matrix(left.Select((v, i) => v + right.GetRow(i)));
         }
 
         public static Matrix operator -(Matrix left, Matrix right)
@@ -178,7 +199,7 @@ namespace SharpOptimization.Numeric
             if (left.Rows != right.Rows || left.Columns != right.Columns)
                 throw new Exception("Matrices dimensions do not match each other");
 
-            return new Matrix(left.Select((v, i) => v - right[i]));
+            return new Matrix(left.Select((v, i) => v - right.GetRow(i)));
         }
 
         public static Matrix operator *(double value, Matrix matrix)
@@ -191,19 +212,9 @@ namespace SharpOptimization.Numeric
             return value*matrix;
         }
 
-        public static Matrix operator /(double value, Matrix matrix)
-        {
-            return matrix/value;
-        }
-
         public static Matrix operator /(Matrix matrix, double value)
         {
             return new Matrix(matrix.Select(v => v / value)); ;
-        }
-
-        public static Matrix operator *(Matrix left, Matrix right)
-        {
-            return new Matrix(left.Select((v, i) => v * right[i]));
         }
 
         # endregion
