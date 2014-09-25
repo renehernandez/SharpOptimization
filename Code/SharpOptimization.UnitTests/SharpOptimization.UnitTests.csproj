@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91798526-14CC-412F-A83A-A794CB036912}</ProjectGuid>
+    <ProjectGuid>{ABE89458-244C-4F29-8478-1A0232465860}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpOptimization.Numeric</RootNamespace>
-    <AssemblyName>SharpOptimization.Numeric</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>SharpOptimization.UnitTests</RootNamespace>
+    <AssemblyName>SharpOptimization.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,12 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algebra.cs" />
-    <Compile Include="Distributions.cs" />
-    <Compile Include="Matrix.cs" />
-    <Compile Include="MwcRandom.cs" />
-    <Compile Include="Vector.cs" />
+    <Compile Include="MatrixTest.cs" />
+    <Compile Include="VectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpOptimization.AutoDiff\SharpOptimization.AutoDiff.csproj">
+      <Project>{f1cce160-f0bb-48ac-b939-b83d9c016b32}</Project>
+      <Name>SharpOptimization.AutoDiff</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpOptimization.Numeric\SharpOptimization.Numeric.csproj">
+      <Project>{91798526-14cc-412f-a83a-a794cb036912}</Project>
+      <Name>SharpOptimization.Numeric</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpOptimization.Optimizer\SharpOptimization.Optimizer.csproj">
+      <Project>{f493e2d2-845b-4f04-853d-50ec01efcafd}</Project>
+      <Name>SharpOptimization.Optimizer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

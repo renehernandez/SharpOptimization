@@ -32,10 +32,12 @@ namespace SharpOptimization.AutoDiff
 
         internal override Func<Vector, double> InternalCompile()
         {
-            var values = Expression.Parameter(typeof(Vector));
-            var body = Expression.Constant(Value, typeof (double));
-            var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
-            return lambda.Compile();
+            //var values = Expression.Parameter(typeof(Vector));
+            //var body = Expression.Constant(Value, typeof (double));
+            //var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
+            //return lambda.Compile();
+
+            return values => Value;
         }
 
         internal override void ResetDerivative()

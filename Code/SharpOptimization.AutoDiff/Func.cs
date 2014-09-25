@@ -20,11 +20,11 @@ namespace SharpOptimization.AutoDiff
             Evaluator = evaluator;
         }
 
-        public CompiledTerm Compile(params Variable[] vars)
+        public CompiledFunc Compile(params Variable[] vars)
         {
             MakeDifferentiation(vars);
             var gradient = vars.Select(v => v.Derivative.InternalCompile());
-            return new CompiledTerm(InternalCompile(), gradient);
+            return new CompiledFunc(InternalCompile(), gradient);
         }
 
         public double Eval(Variable[] vars, params double[] values)
