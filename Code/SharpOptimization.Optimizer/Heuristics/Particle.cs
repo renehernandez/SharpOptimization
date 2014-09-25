@@ -12,28 +12,64 @@ namespace SharpOptimization.Optimizer.Heuristics
 
         # region Public Properties
 
+        /// <summary>
+        /// Gets the constant related to the best position of each particle.
+        /// </summary>
         public double C1 { get { return 2.05; } }
 
+        /// <summary>
+        /// Gets the constant related to the best position know by the neighbors.
+        /// </summary>
         public double C2 { get { return 2.05; } }
 
+        /// <summary>
+        /// Gets the constriction factor applied to velocity formula.
+        /// </summary>
         public double Chi { get { return 0.72984; } }
 
+        /// <summary>
+        /// Gets the dimension of vector representing the particle position.
+        /// </summary>
         public int NumberOfDimensions { get; private set; }
 
+        /// <summary>
+        /// Gets the thresholds for the possible positions of the particle.
+        /// </summary>
         public Tuple<Vector, Vector> Bounds { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the best position known so far by the particle.
+        /// </summary>
         public Vector BestPosition { get; set; }
 
+        /// <summary>
+        /// Gets the current position of the particle.
+        /// </summary>
         public Vector CurrentPosition { get; private set; }
 
+        /// <summary>
+        /// Gets the velocity of the particle.
+        /// </summary>
         public Vector Velocity { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the best fit reached so far by the particle. 
+        /// </summary>
         public double BestFit { get; set; }
 
+        /// <summary>
+        /// Gets the current fit of the particle.
+        /// </summary>
         public double CurrentFit { get; private set; }
 
+        /// <summary>
+        /// Gets the function used to search by particles.
+        /// </summary>
         public CompiledFunc Func { get; private set; }
 
+        /// <summary>
+        /// Gets the neighbors set of the particle.
+        /// </summary>
         public Particle[] Neighbors { get; set; }
 
         # endregion
@@ -57,6 +93,9 @@ namespace SharpOptimization.Optimizer.Heuristics
 
         # region Public Methods
 
+        /// <summary>
+        /// Updates the current position of the particle following the formulaes defined in the standard paper.
+        /// </summary>
         public void Update()
         {
             var neighborsBest = BestPositionFromNeighbors();
@@ -76,6 +115,10 @@ namespace SharpOptimization.Optimizer.Heuristics
             BestPosition = CurrentPosition;
         }
 
+        /// <summary>
+        /// Checks if the current particle position is within the bounds of function search space.
+        /// </summary>
+        /// <returns>True if the particle position is feasible, false otherwise.</returns>
         public bool IsFeasible()
         {
             for (int i = 0; i < NumberOfDimensions; i++)

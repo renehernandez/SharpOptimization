@@ -20,7 +20,7 @@ namespace SharpOptimization.Optimizer
         public Func<CompiledFunc, Vector, Vector, double> Searcher { get; private set; }
 
         /// <summary>
-        /// Gets the correction formulae used by Quasi-Newton optimization method.
+        /// Gets the correction formula used by Quasi-Newton optimization method.
         /// </summary>
         public Func<CompiledFunc, Matrix, Vector, Vector, Matrix> Corrector { get; private set; }
 
