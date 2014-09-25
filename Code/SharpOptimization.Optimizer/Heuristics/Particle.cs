@@ -80,7 +80,7 @@ namespace SharpOptimization.Optimizer.Heuristics
 
         # region Private Methods
 
-        private bool IsFeasible()
+        public bool IsFeasible()
         {
             for (int i = 0; i < NumberOfDimensions; i++)
             {

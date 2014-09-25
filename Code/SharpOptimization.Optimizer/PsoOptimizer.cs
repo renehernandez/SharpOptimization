@@ -79,8 +79,15 @@ namespace SharpOptimization.Optimizer
 
         # region Private Methods
 
+        /// <summary>
+        /// Creates the particle set with non-uniform values and selects an initial best position and best fit 
+        /// </summary>
+        /// <param name="f">Function to which the minimum will be looking for.</param>
+        /// <param name="bounds">Limits of function space search.</param>
         private void SeedPopulation(CompiledFunc f, Tuple<Vector, Vector> bounds)
         {
+            CurrentIteration = 0;
+
             double min = bounds.Item1.Min();
             double max = bounds.Item2.Max();
 
@@ -90,21 +97,37 @@ namespace SharpOptimization.Optimizer
                 Enumerable.Range(0, NumberOfParticles)
                     .Select(i => new Particle(f, f.Dimension, NumberOfNeighborsByParticle, bounds, dist)).ToArray();
 
-            int index = 0;
+            int index = -1;
+            GlobalBestPosition = new Vector(f.Dimension);
+
+            for (int i = 0; i < GlobalBestPosition.Length; i++)
+                GlobalBestPosition[i] = bounds.Item1[i] + (bounds.Item2[i] - bounds.Item1[i])/2;
+
+            GlobalBestFit = f.Eval(GlobalBestPosition);
 
             for (int i = 0; i < NumberOfParticles; i++)
             {
-                if (ParticlesSet[i].BestFit < ParticlesSet[index].BestFit)
-                    index = i;
-                for (int j = 0; j < NumberOfNeighborsByParticle; j++)
+                if (ParticlesSet[i].IsFeasible() && ParticlesSet[i].BestFit < GlobalBestFit)
                 {
-                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j) % NumberOfParticles];
+                    index = i;
+                    GlobalBestFit = ParticlesSet[i].BestFit;
                 }
+
+                // Setting particle neighbors
+                for (int j = 0; j < NumberOfNeighborsByParticle; j++)
+                    ParticlesSet[i].Neighbors[j] = ParticlesSet[(i + 1 + j) % NumberOfParticles];
+            }
+
+            if (index == -1)
+            {
+                ParticlesSet[0].BestPosition = GlobalBestPosition;
+                ParticlesSet[0].BestFit = GlobalBestFit;
+
+                return;
             }
 
             GlobalBestPosition = ParticlesSet[index].BestPosition;
-            GlobalBestFit = ParticlesSet[index].BestFit;
-            CurrentIteration = 0;
+            GlobalBestFit = ParticlesSet[index].BestFit;      
         }
 
         # endregion

@@ -34,6 +34,7 @@ namespace SharpOptimization.Optimizer
 
         protected override Vector Minimize(CompiledFunc f, Vector x = null, Tuple<Vector, Vector> bounds = null)
         {
+            CurrentIteration = 0;
             var b = Matrix.Identity(x.Length);
             
             var x1 = new Vector(x);
