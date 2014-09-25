@@ -36,6 +36,13 @@ namespace SharpOptimization.Optimizer.LineSearch
 
         # region Public Methods
 
+        /// <summary>
+        /// Computes the maximum descent possible from the vector x in the direction dir.
+        /// </summary>
+        /// <param name="func">Function to find it the greatest descent possible in the given direction.</param>
+        /// <param name="x">Current vector of the minimization Quasi-Newton algorithm.</param>
+        /// <param name="dir">Descent direction vector for the current vector.</param>
+        /// <returns>The value of the maximum descent possible.</returns>
         public static double Wolfe(CompiledFunc func, Vector x, Vector dir)
         {
             double a = 0;

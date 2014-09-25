@@ -12,6 +12,14 @@ namespace SharpOptimization.Optimizer.Correction
 
         # region Public Methods
 
+        /// <summary>
+        /// Computes the BFGS correction formula for inverse hessiana approximation.
+        /// </summary>
+        /// <param name="func">Function to find it the hessiana approximation.</param>
+        /// <param name="b">Current inverse approximation of the hessiana.</param>
+        /// <param name="x">Current vector of the minimization Quasi-Newton algorithm.</param>
+        /// <param name="x1">Next vector of the minimization Quasi-Newton algorithm.</param>
+        /// <returns>Returns a matrix representing the next step in inverse hessiana approximation.s</returns>
         public static Matrix Bfgs(CompiledFunc func, Matrix b, Vector x, Vector x1)
         {
             var sk = new Matrix(x1 - x);
