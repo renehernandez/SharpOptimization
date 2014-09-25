@@ -68,6 +68,11 @@ namespace SharpOptimization.AutoDiff
             Inner.Derivative += Derivative*DMath.Cos(Inner);
             Inner.Differentiate();
         }
+
+        public override string ToString()
+        {
+            return string.Format("sin({0})", Inner);
+        }
     }
 
     internal class CosFunc : UnaryFunc
@@ -95,6 +100,11 @@ namespace SharpOptimization.AutoDiff
             Inner.Derivative += Derivative*-DMath.Sin(Inner);
             Inner.Differentiate();
         }
+
+        public override string ToString()
+        {
+            return string.Format("cos({0})", Inner);
+        }
     }
 
     internal class ExpFunc : UnaryFunc
@@ -120,6 +130,11 @@ namespace SharpOptimization.AutoDiff
 
             Inner.Derivative += Derivative*DMath.Exp(Inner);
             Inner.Differentiate();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("exp({0})", Inner);
         }
     }
 
@@ -147,6 +162,11 @@ namespace SharpOptimization.AutoDiff
             Inner.Derivative += Derivative/Inner;
             Inner.Differentiate();
         }
+
+        public override string ToString()
+        {
+            return string.Format("ln({0})", Inner);
+        }
     }
 
     internal class SqrtFunc : UnaryFunc
@@ -172,6 +192,11 @@ namespace SharpOptimization.AutoDiff
 
             Inner.Derivative += Derivative * DMath.Sqrt(Inner) / (2 * Inner);
             Inner.Differentiate();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("sqrt({0})", Inner);
         }
     }
 
@@ -204,6 +229,11 @@ namespace SharpOptimization.AutoDiff
 
             Left.Differentiate();
             Right.Differentiate();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("({0})**{1}", Left, Right);
         }
     }
 

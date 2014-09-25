@@ -50,17 +50,17 @@ namespace SharpOptimization.AutoDiff
 
         internal override Func<Vector, double> InternalCompile()
         {
-            var values = Expression.Parameter(typeof (Vector));
-            var body = Expression.ArrayIndex(values, Expression.Constant(Index));
-            var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
-            return lambda.Compile();
+            //var values = Expression.Parameter(typeof (Vector));
+            //var body = Expression.ArrayIndex(values, Expression.Constant(Index));
+            //var lambda = Expression.Lambda<Func<Vector, double>>(body, values);
+            //return lambda.Compile();
+            return values => values[Index];
         }
 
         internal override void Differentiate()
         {
             //return;
         }
-
 
         public override bool Equals(object obj)
         {
@@ -70,6 +70,11 @@ namespace SharpOptimization.AutoDiff
         public bool Equals(Variable other)
         {
             return !ReferenceEquals(other, null) && ReferenceEquals(other, this);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("x{0}", Index);
         }
 
         # region Operators

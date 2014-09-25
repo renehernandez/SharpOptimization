@@ -43,32 +43,34 @@ namespace SharpOptimization.Numeric
             this.values = new List<double>(values);
         }
 
-        public Vector(params int[] values)
+        public Vector(IEnumerable<double> values)
         {
-            this.values = new List<double>(values.Select(x => x * 1.0));
+            this.values = new List<double>(values);
         }
+
+        //public Vector(params int[] values)
+        //{
+        //    this.values = new List<double>(values.Select(x => x * 1.0));
+        //}
 
         public Vector(IEnumerable<int> values)
         {
             this.values = new List<double>(values.Select(x => x * 1.0));
         }
 
-        public Vector(params long[] values)
-        {
-            this.values = new List<double>(values.Select(x => x * 1.0));
-        }
+        //public Vector(params long[] values)
+        //{
+        //    this.values = new List<double>(values.Select(x => x * 1.0));
+        //}
 
         public Vector(IEnumerable<long> values)
         {
             this.values = new List<double>(values.Select(x => x * 1.0));
         }
 
-        public Vector(IEnumerable<double> values)
-        {
-            this.values = new List<double>(values);
-        }
-
         # endregion
+
+        # region Public Methods
 
         public override string ToString()
         {
@@ -101,9 +103,9 @@ namespace SharpOptimization.Numeric
         
         public Vector Normalize()
         {
-            double sqrt = Math.Sqrt(Dot(this));
+            double norm = Algebra.Norm(this);
 
-            return this/sqrt;
+            return this/norm;
         }
 
         public static Vector Ones(int n)
@@ -116,8 +118,14 @@ namespace SharpOptimization.Numeric
             return new Vector(Enumerable.Repeat(0, n));
         }
 
-        # region Operators
+        public Vector Copy()
+        {
+            return new Vector(this.Select(x => x));
+        }
 
+        # endregion
+
+        # region Operators
 
         public static implicit operator double[](Vector vector)
         {
@@ -131,17 +139,12 @@ namespace SharpOptimization.Numeric
 
         public static implicit operator Vector(int[] values)
         {
-            return new Vector(values.Cast<double>());
+            return new Vector(values.Select(i => i * 1.0));
         }
 
         public static implicit operator Vector(long[] values)
         {
-            return new Vector(values.Cast<double>());
-        }
-
-        public static implicit operator Vector(float[] values)
-        {
-            return new Vector(values.Cast<double>());
+            return new Vector(values.Select(i => i * 1.0));
         }
 
         public static Vector operator -(Vector vector)

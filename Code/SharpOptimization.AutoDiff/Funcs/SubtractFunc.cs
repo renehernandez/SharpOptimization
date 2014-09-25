@@ -24,11 +24,16 @@ namespace SharpOptimization.AutoDiff.Funcs
                 Derivative = IdentityFunc.Identity(1);
             }
 
-            Left.Derivative += Derivative*-Right;
-            Right.Derivative += Derivative*Left;
+            Left.Derivative += Derivative;
+            Right.Derivative -= Derivative;
 
             Left.Differentiate();
             Right.Differentiate();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Left, Right);
         }
     }
 }
