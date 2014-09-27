@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OxyPlot;
+using OxyPlot.Wpf;
+using SharpOptimization.Visual.ViewModels;
 
 namespace SharpOptimization.Visual
 {
@@ -20,9 +23,18 @@ namespace SharpOptimization.Visual
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private PlotViewModel plotViewModel;
+
         public MainWindow()
         {
+            plotViewModel = new PlotViewModel();
+            DataContext = plotViewModel;
+
+
             InitializeComponent();
         }
+
+    
     }
 }
