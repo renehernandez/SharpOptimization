@@ -28,3 +28,6 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 ConsoleOptimization/
+ConsoleOptimization/ConsoleOptimization/ConsoleOptimization.csproj
+ConsoleOptimization/ConsoleOptimization/Program.cs
+ConsoleOptimization/ConsoleOptimization/Properties/AssemblyInfo.cs
